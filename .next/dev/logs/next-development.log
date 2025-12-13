@@ -1,0 +1,1291 @@
+[00:00:01.864] Server  LOG     
+[00:00:01.864] Server  LOG        We detected TypeScript in your project and reconfigured your tsconfig.json file for you.
+[00:00:01.864] Server  LOG        The following suggested values were added to your tsconfig.json. These values can be changed to fit your project's needs:
+
+[00:00:01.865] Server  LOG        	- include was updated to add '.next/dev/types/**/*.ts'
+[00:00:01.865] Server  LOG     
+[00:00:01.865] Server  LOG        The following mandatory changes were made to your tsconfig.json:
+
+[00:00:01.865] Server  LOG        	- jsx was set to react-jsx (next.js uses the React automatic runtime)
+[00:00:01.865] Server  LOG     
+[00:00:02.254] Server  LOG      ✓ Ready in 1473ms
+[00:00:37.080] Server  LOG      ○ Compiling / ...
+[00:00:43.460] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:44.654] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:44.654] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:00:44.654] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765550378741}
+[00:00:52.142] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:52.692] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+      <RedirectBoundary>
+        <RedirectErrorBoundary router={{...}}>
+          <InnerLayoutRouter url="/it?user=a..." tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} ...>
+            <SegmentViewNode type="page" pagePath="/Downloads...">
+              <SegmentTrieNode>
+              <ClientPageRoot Component={function ITDashboard} serverProvidedParams={{...}}>
+                <ITDashboard params={Promise} searchParams={Promise}>
+                  <div className="min-h-scre...">
+                    <header className="sticky top...">
+                      <div className="container ...">
+                        <div className="flex items...">
+                          <div>
+                          <div className="flex items...">
+                            <Button variant="outline" size="sm" onClick={function handleEnableNotifications} ...>
+                              <button
+                                data-slot="button"
++                               className={"inline-flex items-center justify-center whitespace-nowrap text-sm font-me..."}
+-                               className={"inline-flex items-center justify-center whitespace-nowrap text-sm font-me..."}
+                                onClick={function handleEnableNotifications}
+                              >
+                                <Bell className="w-4 h-4">
+                                  <svg
+                                    ref={null}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width={24}
+                                    height={24}
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth={2}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
++                                   className="lucide lucide-bell w-4 h-4"
+-                                   className="lucide lucide-log-out w-4 h-4"
+                                  >
+                                    <path
++                                     d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"
+-                                     d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
+                                    >
++                                   <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0">
+-                                   <polyline points="16 17 21 12 16 7">
+                                ...
+                            ...
+                    ...
+            ...
+          ...
+
+[00:00:53.153] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:53.153] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/it","route":"/it"}
+[00:00:53.153] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/it","route":"/it"}
+[00:00:53.153] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/it?user=admin color: rgb(120, 120, 120) color: inherit {"dp":"/it","o":"http://localhost:3000/it?user=admin","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765550387237}
+[00:00:53.153] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/it?user=admin color: rgb(120, 120, 120) color: inherit {"dp":"/it","o":"http://localhost:3000/it?user=admin","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765550387237}
+[00:01:10.191] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:10.563] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:01:10.563] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:01:10.563] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765550404497}
+[00:01:12.812] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:13.578] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:01:13.578] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/student","route":"/student"}
+[00:01:13.578] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/student?email=ldoctorabdallah%40gmail.com color: rgb(120, 120, 120) color: inherit {"dp":"/student","o":"http://localhost:3000/student?email=ldoctorabdallah%40gmail.com","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765550407621}
+[00:01:17.401] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/student/new-ticket color: rgb(120, 120, 120) color: inherit {"dp":"/student/new-ticket","o":"http://localhost:3000/student/new-ticket","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765550411485}
+[00:01:34.685] Browser LOG     [v0] No notification permission
+[00:01:37.901] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:38.910] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:01:38.910] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/student","route":"/student"}
+[00:01:38.910] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/student color: rgb(120, 120, 120) color: inherit {"dp":"/student","o":"http://localhost:3000/student","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765550432689}
+[00:01:42.782] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/student/new-ticket color: rgb(120, 120, 120) color: inherit {"dp":"/student/new-ticket","o":"http://localhost:3000/student/new-ticket","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765550436869}
+[00:01:58.207] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:58.793] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:01:58.793] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/student","route":"/student"}
+[00:01:58.793] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/student color: rgb(120, 120, 120) color: inherit {"dp":"/student","o":"http://localhost:3000/student","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765550452884}
+[00:02:04.597] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/student/new-ticket color: rgb(120, 120, 120) color: inherit {"dp":"/student/new-ticket","o":"http://localhost:3000/student/new-ticket","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765550458680}
+[00:02:19.466] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:20.571] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:02:20.571] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/student","route":"/student"}
+[00:02:20.571] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/student color: rgb(120, 120, 120) color: inherit {"dp":"/student","o":"http://localhost:3000/student","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765550474649}
+[00:02:35.345] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/student/new-ticket color: rgb(120, 120, 120) color: inherit {"dp":"/student/new-ticket","o":"http://localhost:3000/student/new-ticket","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765550489435}
+[00:02:46.294] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:47.002] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:02:47.002] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/student","route":"/student"}
+[00:02:47.002] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/student color: rgb(120, 120, 120) color: inherit {"dp":"/student","o":"http://localhost:3000/student","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765550501089}
+[00:05:29.876] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/student/new-ticket color: rgb(120, 120, 120) color: inherit {"dp":"/student/new-ticket","o":"http://localhost:3000/student/new-ticket","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765550663963}
+[00:05:44.543] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:05:46.113] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:05:46.113] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/student","route":"/student"}
+[00:05:46.113] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/student color: rgb(120, 120, 120) color: inherit {"dp":"/student","o":"http://localhost:3000/student","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765550680192}
+[00:06:28.534] Server  LOG      ✓ Compiled in 95ms
+[00:11:11.258] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:11:11.909] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:11:11.909] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:11:11.909] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765551006001}
+[00:11:18.383] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:11:18.878] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+      <RedirectBoundary>
+        <RedirectErrorBoundary router={{...}}>
+          <InnerLayoutRouter url="/it?user=a..." tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} ...>
+            <SegmentViewNode type="page" pagePath="/Downloads...">
+              <SegmentTrieNode>
+              <ClientPageRoot Component={function ITDashboard} serverProvidedParams={{...}}>
+                <ITDashboard params={Promise} searchParams={Promise}>
+                  <div className="min-h-scre...">
+                    <header className="sticky top...">
+                      <div className="container ...">
+                        <div className="flex items...">
+                          <div>
+                          <div className="flex items...">
+                            <Button variant="outline" size="sm" onClick={function handleEnableNotifications} ...>
+                              <button
+                                data-slot="button"
++                               className={"inline-flex items-center justify-center whitespace-nowrap text-sm font-me..."}
+-                               className={"inline-flex items-center justify-center whitespace-nowrap text-sm font-me..."}
+                                onClick={function handleEnableNotifications}
+                              >
+                                <Bell className="w-4 h-4">
+                                  <svg
+                                    ref={null}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width={24}
+                                    height={24}
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth={2}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
++                                   className="lucide lucide-bell w-4 h-4"
+-                                   className="lucide lucide-log-out w-4 h-4"
+                                  >
+                                    <path
++                                     d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"
+-                                     d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
+                                    >
++                                   <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0">
+-                                   <polyline points="16 17 21 12 16 7">
+                                ...
+                            ...
+                    ...
+            ...
+          ...
+
+[00:11:19.383] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:11:19.383] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/it","route":"/it"}
+[00:11:19.383] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/it","route":"/it"}
+[00:11:19.383] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/it?user=admin color: rgb(120, 120, 120) color: inherit {"dp":"/it","o":"http://localhost:3000/it?user=admin","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765551013472}
+[00:11:19.383] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/it?user=admin color: rgb(120, 120, 120) color: inherit {"dp":"/it","o":"http://localhost:3000/it?user=admin","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765551013473}
+[00:12:54.027] Server  LOG      ✓ Compiled in 173ms
+[00:17:12.901] Server  LOG      ✓ Compiled in 129ms
+[00:19:02.684] Server  LOG      ✓ Compiled in 141ms
+[00:20:39.815] Browser LOG     Celebration video loaded successfully
+[00:21:19.493] Server  LOG      ✓ Compiled in 188ms
+[00:21:36.389] Browser LOG     Celebration video loaded successfully
+[00:26:09.482] Server  LOG      ✓ Compiled in 147ms
+[00:26:20.553] Browser LOG     Celebration video loaded successfully
+[00:36:17.998] Browser LOG     Celebration video loaded successfully
+[00:37:42.612] Server  LOG      ✓ Compiled in 131ms
+[00:37:42.907] Browser ERROR   uncaughtError: ReferenceError: handleDrag is not defined
+[00:37:45.537] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:37:45.558] Server  LOG      ✓ Compiled in 237ms
+[00:37:46.227] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/it?user=admin color: rgb(120, 120, 120) color: inherit {"dp":"/it","o":"http://localhost:3000/it?user=admin","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765552599791}
+[00:37:49.451] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:37:51.289] Server  LOG      ✓ Compiled in 252ms
+[00:37:52.458] Server  LOG      ✓ Compiled in 249ms
+[00:37:52.910] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+      <RedirectBoundary>
+        <RedirectErrorBoundary router={{...}}>
+          <InnerLayoutRouter url="/it?user=a..." tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} ...>
+            <SegmentViewNode type="page" pagePath="/Downloads...">
+              <SegmentTrieNode>
+              <ClientPageRoot Component={function ITDashboard} serverProvidedParams={{...}}>
+                <ITDashboard params={Promise} searchParams={Promise}>
+                  <div className="min-h-scre...">
+                    <header className="sticky top...">
+                      <div className="container ...">
+                        <div className="flex items...">
+                          <div>
+                          <div className="flex items...">
+                            <Button variant="outline" size="sm" onClick={function handleEnableNotifications} ...>
+                              <button
+                                data-slot="button"
++                               className={"inline-flex items-center justify-center whitespace-nowrap text-sm font-me..."}
+-                               className={"inline-flex items-center justify-center whitespace-nowrap text-sm font-me..."}
+                                onClick={function handleEnableNotifications}
+                              >
+                                <Bell className="w-4 h-4">
+                                  <svg
+                                    ref={null}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width={24}
+                                    height={24}
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth={2}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
++                                   className="lucide lucide-bell w-4 h-4"
+-                                   className="lucide lucide-log-out w-4 h-4"
+                                  >
+                                    <path
++                                     d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"
+-                                     d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
+                                    >
++                                   <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0">
+-                                   <polyline points="16 17 21 12 16 7">
+                                ...
+                            ...
+                    ...
+            ...
+          ...
+
+[00:37:52.910] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:37:52.910] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/it","route":"/it"}
+[00:37:52.910] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/it","route":"/it"}
+[00:37:52.910] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/it?user=admin color: rgb(120, 120, 120) color: inherit {"dp":"/it","o":"http://localhost:3000/it?user=admin","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765552606098}
+[00:37:52.910] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/it?user=admin color: rgb(120, 120, 120) color: inherit {"dp":"/it","o":"http://localhost:3000/it?user=admin","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765552606099}
+[00:38:56.628] Server  LOG      ✓ Compiled in 113ms
+[00:39:02.593] Server  LOG      ✓ Compiled in 228ms
+[00:39:11.102] Server  LOG      ✓ Compiled in 305ms
+[00:39:19.041] Server  LOG      ✓ Compiled in 218ms
+[00:39:20.661] Server  LOG      ✓ Compiled in 136ms
+[00:39:23.694] Server  LOG      ✓ Compiled in 219ms
+[00:39:24.963] Server  LOG      ✓ Compiled in 149ms
+[00:40:40.141] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:40:41.329] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:40:41.329] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:40:41.329] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765552774451}
+[00:40:44.331] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:40:45.140] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:40:45.140] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/student","route":"/student"}
+[00:40:45.141] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/student?email=ldoctorabdallah%40gmail.com color: rgb(120, 120, 120) color: inherit {"dp":"/student","o":"http://localhost:3000/student?email=ldoctorabdallah%40gmail.com","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765552779126}
+[00:41:19.256] Server  LOG      ✓ Compiled in 163ms
+[00:41:21.881] Server  LOG      ✓ Compiled in 249ms
+[00:41:24.295] Server  LOG      ✓ Compiled in 208ms
+[00:41:27.570] Server  LOG      ✓ Compiled in 128ms
+[00:41:29.814] Server  LOG      ✓ Compiled in 172ms
+[00:41:38.932] Server  LOG      ✓ Compiled in 116ms
+[00:43:43.003] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:43:43.977] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:43:43.978] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:43:43.978] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765552957325}
+[00:43:47.486] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:43:47.949] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+      <RedirectBoundary>
+        <RedirectErrorBoundary router={{...}}>
+          <InnerLayoutRouter url="/it?user=a..." tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} ...>
+            <SegmentViewNode type="page" pagePath="/Downloads...">
+              <SegmentTrieNode>
+              <ClientPageRoot Component={function ITDashboard} serverProvidedParams={{...}}>
+                <ITDashboard params={Promise} searchParams={Promise}>
+                  <div className="min-h-scre...">
+                    <header className="sticky top...">
+                      <div className="container ...">
+                        <div className="flex items...">
+                          <div>
+                          <div className="flex items...">
+                            <Button variant="outline" size="sm" onClick={function handleEnableNotifications} ...>
+                              <button
+                                data-slot="button"
++                               className={"inline-flex items-center justify-center whitespace-nowrap text-sm font-me..."}
+-                               className={"inline-flex items-center justify-center whitespace-nowrap text-sm font-me..."}
+                                onClick={function handleEnableNotifications}
+                              >
+                                <Bell className="w-4 h-4">
+                                  <svg
+                                    ref={null}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width={24}
+                                    height={24}
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth={2}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
++                                   className="lucide lucide-bell w-4 h-4"
+-                                   className="lucide lucide-log-out w-4 h-4"
+                                  >
+                                    <path
++                                     d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"
+-                                     d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
+                                    >
++                                   <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0">
+-                                   <polyline points="16 17 21 12 16 7">
+                                ...
+                            ...
+                    ...
+            ...
+          ...
+
+[00:43:48.495] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:43:48.495] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/it","route":"/it"}
+[00:43:48.495] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/it","route":"/it"}
+[00:43:48.495] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/it?user=admin color: rgb(120, 120, 120) color: inherit {"dp":"/it","o":"http://localhost:3000/it?user=admin","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765552962585}
+[00:43:48.495] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/it?user=admin color: rgb(120, 120, 120) color: inherit {"dp":"/it","o":"http://localhost:3000/it?user=admin","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765552962585}
+[00:44:18.559] Server  LOG      ✓ Compiled in 134ms
+[00:44:20.571] Server  LOG      ✓ Compiled in 134ms
+[00:46:52.807] Server  LOG      ✓ Compiled in 144ms
+[00:46:54.313] Server  LOG      ✓ Compiled in 142ms
+[00:46:56.071] Server  LOG      ✓ Compiled in 120ms
+[00:46:56.164] Browser ERROR   uncaughtError: ReferenceError: isLoading is not defined
+[00:46:57.384] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:46:57.877] Server  ERROR   C:\Users\hp\Downloads\ITTickting Sys\.next\dev\server\chunks\ssr\Downloads_ITTickting Sys_2a0f0556._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[00:46:57.878] Server  ERROR    ⨯ ReferenceError: isLoading is not defined
+[00:46:57.905] Server  LOG      ✓ Compiled in 101ms
+[00:46:57.909] Browser ERROR   uncaughtError: ReferenceError: isLoading is not defined
+[00:47:00.827] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:47:01.895] Browser ERROR   uncaughtError: ReferenceError: isLoading is not defined
+[00:47:16.709] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:47:17.171] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <LoadingBoundary name="it/" loading={null}>
+      <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+        <RedirectBoundary>
+          <RedirectErrorBoundary router={{...}}>
+            <InnerLayoutRouter url="/it?user=a..." tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} ...>
+              <SegmentViewNode type="page" pagePath="/Downloads...">
+                <SegmentTrieNode>
+                <ClientPageRoot Component={function ITDashboard} serverProvidedParams={{...}}>
+                  <ITDashboard params={Promise} searchParams={Promise}>
+                    <div className="min-h-scre...">
+                      <header>
+                      <main className="container ...">
+                        <div className="mb-8 flex ...">
+                          <div className="bg-card ro...">
+                            <button>
+                            <button onClick={function onClick} className="px-4 py-2 ...">
++                             All (10)
+-                             All (0)
+                            ...
+                        ...
+              ...
+            ...
+
+[00:47:17.171] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:47:17.171] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/it","route":"/it"}
+[00:47:17.171] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/it","route":"/it"}
+[00:47:17.171] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/it?user=admin color: rgb(120, 120, 120) color: inherit {"dp":"/it","o":"http://localhost:3000/it?user=admin","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765553171229}
+[00:47:17.171] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/it?user=admin color: rgb(120, 120, 120) color: inherit {"dp":"/it","o":"http://localhost:3000/it?user=admin","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765553171229}
+[00:47:44.768] Server  LOG      ✓ Compiled in 125ms
+[00:48:59.375] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:49:00.717] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:49:00.717] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/it","route":"/it"}
+[00:49:00.717] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/it?user=admin color: rgb(120, 120, 120) color: inherit {"dp":"/it","o":"http://localhost:3000/it?user=admin","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765553274801}
+[00:49:21.069] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:49:21.684] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:49:21.684] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:49:21.684] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765553295740}
+[00:50:08.799] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:50:09.587] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:50:09.587] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/student","route":"/student"}
+[00:50:09.587] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/student?email=ldoctorabdallah%40gmail.com color: rgb(120, 120, 120) color: inherit {"dp":"/student","o":"http://localhost:3000/student?email=ldoctorabdallah%40gmail.com","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765553343647}
+[00:52:03.724] Server  LOG      ✓ Compiled in 217ms
+[00:52:12.250] Server  LOG      ✓ Compiled in 111ms
+[00:52:12.368] Browser ERROR   uncaughtError: ReferenceError: HelpCircle is not defined
+[00:52:13.471] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:52:14.012] Server  LOG      ✓ Compiled in 129ms
+[00:52:14.012] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/student?email=ldoctorabdallah%40gmail.com color: rgb(120, 120, 120) color: inherit {"dp":"/student","o":"http://localhost:3000/student?email=ldoctorabdallah%40gmail.com","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765553467706}
+[00:52:14.835] Server  LOG      ✓ Compiled in 137ms
+[00:52:16.726] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:52:17.317] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:52:17.317] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/student","route":"/student"}
+[00:52:17.317] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/student?email=ldoctorabdallah%40gmail.com color: rgb(120, 120, 120) color: inherit {"dp":"/student","o":"http://localhost:3000/student?email=ldoctorabdallah%40gmail.com","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765553471407}
+[00:57:10.178] Server  LOG      ✓ Compiled in 135ms
+[00:57:58.622] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/student/new-ticket color: rgb(120, 120, 120) color: inherit {"dp":"/student/new-ticket","o":"http://localhost:3000/student/new-ticket","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765553812708}
+[00:58:00.319] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/student color: rgb(120, 120, 120) color: inherit {"dp":"/student","o":"http://localhost:3000/student","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765553814284}
+[00:58:04.832] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:58:06.843] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:58:06.843] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/student","route":"/student"}
+[00:58:06.843] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/student color: rgb(120, 120, 120) color: inherit {"dp":"/student","o":"http://localhost:3000/student","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765553820926}
+[00:58:38.596] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:58:38.892] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:58:38.892] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:58:38.892] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765553852880}
+[00:58:42.304] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:58:43.310] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:58:43.310] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/it","route":"/it"}
+[00:58:43.310] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/it?user=admin color: rgb(120, 120, 120) color: inherit {"dp":"/it","o":"http://localhost:3000/it?user=admin","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765553857388}
+[00:59:41.668] Browser ERROR   ./Downloads/ITTickting Sys/components/student/common-issues.tsx:18:13
+Parsing ecmascript source code failed
+  16 |   {
+  17 |     issue: "Wi-Fi Not Connecting",
+> 18 |     category: "software",
+     |             ^
+  19 |     fixSteps: [
+  20 |       "Check if Wi-Fi is enabled on your device",
+  21 |       "Restart your Wi-Fi adapter (turn off and on)",
+
+Expected ';', '}' or <eof>
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:43.292] Browser ERROR   ./Downloads/ITTickting Sys/components/student/common-issues.tsx:18:13
+Parsing ecmascript source code failed
+  16 |   {
+  17 |     issue: "Wi-Fi Not Connecting",
+> 18 |     category: "software",
+     |             ^
+  19 |     fixSteps: [
+  20 |       "Check if Wi-Fi is enabled on your device",
+  21 |       "Restart your Wi-Fi adapter (turn off and on)",
+
+Expected ';', '}' or <eof>
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/components/student/lazy-common-issue-card.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/components/student/lazy-common-issue-card.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:44.464] Browser ERROR   ./Downloads/ITTickting Sys/components/student/common-issues.tsx:18:13
+Parsing ecmascript source code failed
+  16 |   {
+  17 |     issue: "Wi-Fi Not Connecting",
+> 18 |     category: "software",
+     |             ^
+  19 |     fixSteps: [
+  20 |       "Check if Wi-Fi is enabled on your device",
+  21 |       "Restart your Wi-Fi adapter (turn off and on)",
+
+Expected ';', '}' or <eof>
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:44.464] Browser ERROR   ./Downloads/ITTickting Sys/app/student/page.tsx:8:1
+Export getCommonIssuesList doesn't exist in target module
+   6 | import { LogOut, Plus, TicketIcon, Wrench } from "lucide-react"
+   7 | import TicketList from "@/components/student/ticket-list"
+>  8 | import { getCommonIssuesList } from "@/components/student/common-issues"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 | import LazyCommonIssueCard from "@/components/student/lazy-common-issue-card"
+  10 |
+  11 | export default function StudentPortal() {
+
+The export getCommonIssuesList was not found in module [project]/Downloads/ITTickting Sys/components/student/common-issues.tsx [app-client] (ecmascript).
+Did you mean to import commonIssues?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:44.464] Browser ERROR   ./Downloads/ITTickting Sys/app/student/page.tsx:8:1
+Export getCommonIssuesList doesn't exist in target module
+   6 | import { LogOut, Plus, TicketIcon, Wrench } from "lucide-react"
+   7 | import TicketList from "@/components/student/ticket-list"
+>  8 | import { getCommonIssuesList } from "@/components/student/common-issues"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 | import LazyCommonIssueCard from "@/components/student/lazy-common-issue-card"
+  10 |
+  11 | export default function StudentPortal() {
+
+The export getCommonIssuesList was not found in module [project]/Downloads/ITTickting Sys/components/student/common-issues.tsx [app-ssr] (ecmascript).
+Did you mean to import commonIssues?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:45.596] Server  LOG      ✓ Compiled in 113ms
+[00:59:45.711] Browser ERROR   ./Downloads/ITTickting Sys/components/student/common-issues.tsx:18:13
+Parsing ecmascript source code failed
+  16 |   {
+  17 |     issue: "Wi-Fi Not Connecting",
+> 18 |     category: "software",
+     |             ^
+  19 |     fixSteps: [
+  20 |       "Check if Wi-Fi is enabled on your device",
+  21 |       "Restart your Wi-Fi adapter (turn off and on)",
+
+Expected ';', '}' or <eof>
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:45.712] Browser ERROR   ./Downloads/ITTickting Sys/app/student/page.tsx:8:1
+Export getCommonIssuesList doesn't exist in target module
+   6 | import { LogOut, Plus, TicketIcon, Wrench } from "lucide-react"
+   7 | import TicketList from "@/components/student/ticket-list"
+>  8 | import { getCommonIssuesList } from "@/components/student/common-issues"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 | import LazyCommonIssueCard from "@/components/student/lazy-common-issue-card"
+  10 |
+  11 | export default function StudentPortal() {
+
+The export getCommonIssuesList was not found in module [project]/Downloads/ITTickting Sys/components/student/common-issues.tsx [app-client] (ecmascript).
+Did you mean to import commonIssues?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:45.712] Browser ERROR   ./Downloads/ITTickting Sys/app/student/page.tsx:8:1
+Export getCommonIssuesList doesn't exist in target module
+   6 | import { LogOut, Plus, TicketIcon, Wrench } from "lucide-react"
+   7 | import TicketList from "@/components/student/ticket-list"
+>  8 | import { getCommonIssuesList } from "@/components/student/common-issues"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 | import LazyCommonIssueCard from "@/components/student/lazy-common-issue-card"
+  10 |
+  11 | export default function StudentPortal() {
+
+The export getCommonIssuesList was not found in module [project]/Downloads/ITTickting Sys/components/student/common-issues.tsx [app-ssr] (ecmascript).
+Did you mean to import commonIssues?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:46.906] Server  LOG      ✓ Compiled in 136ms
+[00:59:47.011] Browser ERROR   ./Downloads/ITTickting Sys/components/student/common-issues.tsx:18:13
+Parsing ecmascript source code failed
+  16 |   {
+  17 |     issue: "Wi-Fi Not Connecting",
+> 18 |     category: "software",
+     |             ^
+  19 |     fixSteps: [
+  20 |       "Check if Wi-Fi is enabled on your device",
+  21 |       "Restart your Wi-Fi adapter (turn off and on)",
+
+Expected ';', '}' or <eof>
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:47.011] Browser ERROR   ./Downloads/ITTickting Sys/app/student/page.tsx:8:1
+Export getCommonIssuesList doesn't exist in target module
+   6 | import { LogOut, Plus, TicketIcon, Wrench } from "lucide-react"
+   7 | import TicketList from "@/components/student/ticket-list"
+>  8 | import { getCommonIssuesList } from "@/components/student/common-issues"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 | import LazyCommonIssueCard from "@/components/student/lazy-common-issue-card"
+  10 |
+  11 | export default function StudentPortal() {
+
+The export getCommonIssuesList was not found in module [project]/Downloads/ITTickting Sys/components/student/common-issues.tsx [app-client] (ecmascript).
+Did you mean to import commonIssues?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:47.011] Browser ERROR   ./Downloads/ITTickting Sys/app/student/page.tsx:8:1
+Export getCommonIssuesList doesn't exist in target module
+   6 | import { LogOut, Plus, TicketIcon, Wrench } from "lucide-react"
+   7 | import TicketList from "@/components/student/ticket-list"
+>  8 | import { getCommonIssuesList } from "@/components/student/common-issues"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 | import LazyCommonIssueCard from "@/components/student/lazy-common-issue-card"
+  10 |
+  11 | export default function StudentPortal() {
+
+The export getCommonIssuesList was not found in module [project]/Downloads/ITTickting Sys/components/student/common-issues.tsx [app-ssr] (ecmascript).
+Did you mean to import commonIssues?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:48.462] Server  LOG      ✓ Compiled in 180ms
+[00:59:48.567] Browser ERROR   ./Downloads/ITTickting Sys/components/student/common-issues.tsx:18:13
+Parsing ecmascript source code failed
+  16 |   {
+  17 |     issue: "Wi-Fi Not Connecting",
+> 18 |     category: "software",
+     |             ^
+  19 |     fixSteps: [
+  20 |       "Check if Wi-Fi is enabled on your device",
+  21 |       "Restart your Wi-Fi adapter (turn off and on)",
+
+Expected ';', '}' or <eof>
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:48.567] Browser ERROR   ./Downloads/ITTickting Sys/app/student/page.tsx:8:1
+Export getCommonIssuesList doesn't exist in target module
+   6 | import { LogOut, Plus, TicketIcon, Wrench } from "lucide-react"
+   7 | import TicketList from "@/components/student/ticket-list"
+>  8 | import { getCommonIssuesList } from "@/components/student/common-issues"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 | import LazyCommonIssueCard from "@/components/student/lazy-common-issue-card"
+  10 |
+  11 | export default function StudentPortal() {
+
+The export getCommonIssuesList was not found in module [project]/Downloads/ITTickting Sys/components/student/common-issues.tsx [app-client] (ecmascript).
+Did you mean to import commonIssues?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:48.567] Browser ERROR   ./Downloads/ITTickting Sys/app/student/page.tsx:8:1
+Export getCommonIssuesList doesn't exist in target module
+   6 | import { LogOut, Plus, TicketIcon, Wrench } from "lucide-react"
+   7 | import TicketList from "@/components/student/ticket-list"
+>  8 | import { getCommonIssuesList } from "@/components/student/common-issues"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 | import LazyCommonIssueCard from "@/components/student/lazy-common-issue-card"
+  10 |
+  11 | export default function StudentPortal() {
+
+The export getCommonIssuesList was not found in module [project]/Downloads/ITTickting Sys/components/student/common-issues.tsx [app-ssr] (ecmascript).
+Did you mean to import commonIssues?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:49.966] Server  LOG      ✓ Compiled in 353ms
+[00:59:50.072] Browser ERROR   ./Downloads/ITTickting Sys/components/student/common-issues.tsx:18:13
+Parsing ecmascript source code failed
+  16 |   {
+  17 |     issue: "Wi-Fi Not Connecting",
+> 18 |     category: "software",
+     |             ^
+  19 |     fixSteps: [
+  20 |       "Check if Wi-Fi is enabled on your device",
+  21 |       "Restart your Wi-Fi adapter (turn off and on)",
+
+Expected ';', '}' or <eof>
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:50.073] Browser ERROR   ./Downloads/ITTickting Sys/app/student/page.tsx:8:1
+Export getCommonIssuesList doesn't exist in target module
+   6 | import { LogOut, Plus, TicketIcon, Wrench } from "lucide-react"
+   7 | import TicketList from "@/components/student/ticket-list"
+>  8 | import { getCommonIssuesList } from "@/components/student/common-issues"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 | import LazyCommonIssueCard from "@/components/student/lazy-common-issue-card"
+  10 |
+  11 | export default function StudentPortal() {
+
+The export getCommonIssuesList was not found in module [project]/Downloads/ITTickting Sys/components/student/common-issues.tsx [app-client] (ecmascript).
+Did you mean to import commonIssues?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:50.073] Browser ERROR   ./Downloads/ITTickting Sys/app/student/page.tsx:8:1
+Export getCommonIssuesList doesn't exist in target module
+   6 | import { LogOut, Plus, TicketIcon, Wrench } from "lucide-react"
+   7 | import TicketList from "@/components/student/ticket-list"
+>  8 | import { getCommonIssuesList } from "@/components/student/common-issues"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 | import LazyCommonIssueCard from "@/components/student/lazy-common-issue-card"
+  10 |
+  11 | export default function StudentPortal() {
+
+The export getCommonIssuesList was not found in module [project]/Downloads/ITTickting Sys/components/student/common-issues.tsx [app-ssr] (ecmascript).
+Did you mean to import commonIssues?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:55.409] Browser ERROR   ./Downloads/ITTickting Sys/components/student/common-issues.tsx:18:13
+Parsing ecmascript source code failed
+  16 |   {
+  17 |     issue: "Wi-Fi Not Connecting",
+> 18 |     category: "software",
+     |             ^
+  19 |     fixSteps: [
+  20 |       "Check if Wi-Fi is enabled on your device",
+  21 |       "Restart your Wi-Fi adapter (turn off and on)",
+
+Expected ';', '}' or <eof>
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:55.409] Browser ERROR   ./Downloads/ITTickting Sys/app/student/page.tsx:8:1
+Export getCommonIssuesList doesn't exist in target module
+   6 | import { LogOut, Plus, TicketIcon, Wrench } from "lucide-react"
+   7 | import TicketList from "@/components/student/ticket-list"
+>  8 | import { getCommonIssuesList } from "@/components/student/common-issues"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 | import LazyCommonIssueCard from "@/components/student/lazy-common-issue-card"
+  10 |
+  11 | export default function StudentPortal() {
+
+The export getCommonIssuesList was not found in module [project]/Downloads/ITTickting Sys/components/student/common-issues.tsx [app-client] (ecmascript).
+Did you mean to import commonIssues?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:55.409] Browser ERROR   ./Downloads/ITTickting Sys/app/student/page.tsx:8:1
+Export getCommonIssuesList doesn't exist in target module
+   6 | import { LogOut, Plus, TicketIcon, Wrench } from "lucide-react"
+   7 | import TicketList from "@/components/student/ticket-list"
+>  8 | import { getCommonIssuesList } from "@/components/student/common-issues"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 | import LazyCommonIssueCard from "@/components/student/lazy-common-issue-card"
+  10 |
+  11 | export default function StudentPortal() {
+
+The export getCommonIssuesList was not found in module [project]/Downloads/ITTickting Sys/components/student/common-issues.tsx [app-ssr] (ecmascript).
+Did you mean to import commonIssues?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:56.386] Browser ERROR   ./Downloads/ITTickting Sys/components/student/common-issues.tsx:18:13
+Parsing ecmascript source code failed
+  16 |   {
+  17 |     issue: "Wi-Fi Not Connecting",
+> 18 |     category: "software",
+     |             ^
+  19 |     fixSteps: [
+  20 |       "Check if Wi-Fi is enabled on your device",
+  21 |       "Restart your Wi-Fi adapter (turn off and on)",
+
+Expected ';', '}' or <eof>
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:56.386] Browser ERROR   ./Downloads/ITTickting Sys/app/student/page.tsx:8:1
+Export getCommonIssuesList doesn't exist in target module
+   6 | import { LogOut, Plus, TicketIcon, Wrench } from "lucide-react"
+   7 | import TicketList from "@/components/student/ticket-list"
+>  8 | import { getCommonIssuesList } from "@/components/student/common-issues"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 | import LazyCommonIssueCard from "@/components/student/lazy-common-issue-card"
+  10 |
+  11 | export default function StudentPortal() {
+
+The export getCommonIssuesList was not found in module [project]/Downloads/ITTickting Sys/components/student/common-issues.tsx [app-client] (ecmascript).
+Did you mean to import commonIssues?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:56.386] Browser ERROR   ./Downloads/ITTickting Sys/app/student/page.tsx:8:1
+Export getCommonIssuesList doesn't exist in target module
+   6 | import { LogOut, Plus, TicketIcon, Wrench } from "lucide-react"
+   7 | import TicketList from "@/components/student/ticket-list"
+>  8 | import { getCommonIssuesList } from "@/components/student/common-issues"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 | import LazyCommonIssueCard from "@/components/student/lazy-common-issue-card"
+  10 |
+  11 | export default function StudentPortal() {
+
+The export getCommonIssuesList was not found in module [project]/Downloads/ITTickting Sys/components/student/common-issues.tsx [app-ssr] (ecmascript).
+Did you mean to import commonIssues?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:56.386] Browser ERROR   ./Downloads/ITTickting Sys/components/student/common-issues.tsx:18:13
+Parsing ecmascript source code failed
+  16 |   {
+  17 |     issue: "Wi-Fi Not Connecting",
+> 18 |     category: "software",
+     |             ^
+  19 |     fixSteps: [
+  20 |       "Check if Wi-Fi is enabled on your device",
+  21 |       "Restart your Wi-Fi adapter (turn off and on)",
+
+Expected ';', '}' or <eof>
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:56.386] Browser ERROR   ./Downloads/ITTickting Sys/app/student/page.tsx:8:1
+Export getCommonIssuesList doesn't exist in target module
+   6 | import { LogOut, Plus, TicketIcon, Wrench } from "lucide-react"
+   7 | import TicketList from "@/components/student/ticket-list"
+>  8 | import { getCommonIssuesList } from "@/components/student/common-issues"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 | import LazyCommonIssueCard from "@/components/student/lazy-common-issue-card"
+  10 |
+  11 | export default function StudentPortal() {
+
+The export getCommonIssuesList was not found in module [project]/Downloads/ITTickting Sys/components/student/common-issues.tsx [app-client] (ecmascript).
+Did you mean to import commonIssues?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:56.386] Browser ERROR   ./Downloads/ITTickting Sys/app/student/page.tsx:8:1
+Export getCommonIssuesList doesn't exist in target module
+   6 | import { LogOut, Plus, TicketIcon, Wrench } from "lucide-react"
+   7 | import TicketList from "@/components/student/ticket-list"
+>  8 | import { getCommonIssuesList } from "@/components/student/common-issues"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 | import LazyCommonIssueCard from "@/components/student/lazy-common-issue-card"
+  10 |
+  11 | export default function StudentPortal() {
+
+The export getCommonIssuesList was not found in module [project]/Downloads/ITTickting Sys/components/student/common-issues.tsx [app-ssr] (ecmascript).
+Did you mean to import commonIssues?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:56.971] Browser ERROR   ./Downloads/ITTickting Sys/components/student/common-issues.tsx:18:13
+Parsing ecmascript source code failed
+  16 |   {
+  17 |     issue: "Wi-Fi Not Connecting",
+> 18 |     category: "software",
+     |             ^
+  19 |     fixSteps: [
+  20 |       "Check if Wi-Fi is enabled on your device",
+  21 |       "Restart your Wi-Fi adapter (turn off and on)",
+
+Expected ';', '}' or <eof>
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:56.971] Browser ERROR   ./Downloads/ITTickting Sys/app/student/page.tsx:8:1
+Export getCommonIssuesList doesn't exist in target module
+   6 | import { LogOut, Plus, TicketIcon, Wrench } from "lucide-react"
+   7 | import TicketList from "@/components/student/ticket-list"
+>  8 | import { getCommonIssuesList } from "@/components/student/common-issues"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 | import LazyCommonIssueCard from "@/components/student/lazy-common-issue-card"
+  10 |
+  11 | export default function StudentPortal() {
+
+The export getCommonIssuesList was not found in module [project]/Downloads/ITTickting Sys/components/student/common-issues.tsx [app-client] (ecmascript).
+Did you mean to import commonIssues?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:56.972] Browser ERROR   ./Downloads/ITTickting Sys/app/student/page.tsx:8:1
+Export getCommonIssuesList doesn't exist in target module
+   6 | import { LogOut, Plus, TicketIcon, Wrench } from "lucide-react"
+   7 | import TicketList from "@/components/student/ticket-list"
+>  8 | import { getCommonIssuesList } from "@/components/student/common-issues"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 | import LazyCommonIssueCard from "@/components/student/lazy-common-issue-card"
+  10 |
+  11 | export default function StudentPortal() {
+
+The export getCommonIssuesList was not found in module [project]/Downloads/ITTickting Sys/components/student/common-issues.tsx [app-ssr] (ecmascript).
+Did you mean to import commonIssues?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:58.164] Browser ERROR   uncaughtError: Error: ./Downloads/ITTickting Sys/components/student/common-issues.tsx:18:13
+Parsing ecmascript source code failed
+  16 |   {
+  17 |     issue: "Wi-Fi Not Connecting",
+> 18 |     category: "software",
+     |             ^
+  19 |     fixSteps: [
+  20 |       "Check if Wi-Fi is enabled on your device",
+  21 |       "Restart your Wi-Fi adapter (turn off and on)",
+
+Expected ';', '}' or <eof>
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+
+[00:59:59.838] Browser ERROR   ./Downloads/ITTickting Sys/components/student/common-issues.tsx:18:13
+Parsing ecmascript source code failed
+  16 |   {
+  17 |     issue: "Wi-Fi Not Connecting",
+> 18 |     category: "software",
+     |             ^
+  19 |     fixSteps: [
+  20 |       "Check if Wi-Fi is enabled on your device",
+  21 |       "Restart your Wi-Fi adapter (turn off and on)",
+
+Expected ';', '}' or <eof>
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:59.838] Browser ERROR   ./Downloads/ITTickting Sys/app/student/page.tsx:8:1
+Export getCommonIssuesList doesn't exist in target module
+   6 | import { LogOut, Plus, TicketIcon, Wrench } from "lucide-react"
+   7 | import TicketList from "@/components/student/ticket-list"
+>  8 | import { getCommonIssuesList } from "@/components/student/common-issues"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 | import LazyCommonIssueCard from "@/components/student/lazy-common-issue-card"
+  10 |
+  11 | export default function StudentPortal() {
+
+The export getCommonIssuesList was not found in module [project]/Downloads/ITTickting Sys/components/student/common-issues.tsx [app-client] (ecmascript).
+Did you mean to import commonIssues?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[00:59:59.838] Browser ERROR   ./Downloads/ITTickting Sys/app/student/page.tsx:8:1
+Export getCommonIssuesList doesn't exist in target module
+   6 | import { LogOut, Plus, TicketIcon, Wrench } from "lucide-react"
+   7 | import TicketList from "@/components/student/ticket-list"
+>  8 | import { getCommonIssuesList } from "@/components/student/common-issues"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 | import LazyCommonIssueCard from "@/components/student/lazy-common-issue-card"
+  10 |
+  11 | export default function StudentPortal() {
+
+The export getCommonIssuesList was not found in module [project]/Downloads/ITTickting Sys/components/student/common-issues.tsx [app-ssr] (ecmascript).
+Did you mean to import commonIssues?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[01:00:00.750] Browser ERROR   ./Downloads/ITTickting Sys/components/student/common-issues.tsx:18:13
+Parsing ecmascript source code failed
+  16 |   {
+  17 |     issue: "Wi-Fi Not Connecting",
+> 18 |     category: "software",
+     |             ^
+  19 |     fixSteps: [
+  20 |       "Check if Wi-Fi is enabled on your device",
+  21 |       "Restart your Wi-Fi adapter (turn off and on)",
+
+Expected ';', '}' or <eof>
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/components/student/common-issues.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[01:00:00.750] Browser ERROR   ./Downloads/ITTickting Sys/app/student/page.tsx:8:1
+Export getCommonIssuesList doesn't exist in target module
+   6 | import { LogOut, Plus, TicketIcon, Wrench } from "lucide-react"
+   7 | import TicketList from "@/components/student/ticket-list"
+>  8 | import { getCommonIssuesList } from "@/components/student/common-issues"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 | import LazyCommonIssueCard from "@/components/student/lazy-common-issue-card"
+  10 |
+  11 | export default function StudentPortal() {
+
+The export getCommonIssuesList was not found in module [project]/Downloads/ITTickting Sys/components/student/common-issues.tsx [app-client] (ecmascript).
+Did you mean to import commonIssues?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[01:00:00.750] Browser ERROR   ./Downloads/ITTickting Sys/app/student/page.tsx:8:1
+Export getCommonIssuesList doesn't exist in target module
+   6 | import { LogOut, Plus, TicketIcon, Wrench } from "lucide-react"
+   7 | import TicketList from "@/components/student/ticket-list"
+>  8 | import { getCommonIssuesList } from "@/components/student/common-issues"
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   9 | import LazyCommonIssueCard from "@/components/student/lazy-common-issue-card"
+  10 |
+  11 | export default function StudentPortal() {
+
+The export getCommonIssuesList was not found in module [project]/Downloads/ITTickting Sys/components/student/common-issues.tsx [app-ssr] (ecmascript).
+Did you mean to import commonIssues?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component Browser]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Client Component SSR]
+    ./Downloads/ITTickting Sys/app/student/page.tsx [Server Component]
+[01:00:03.768] Server  LOG      ✓ Compiled in 129ms
+[01:00:04.322] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:00:05.392] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:00:05.392] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/it","route":"/it"}
+[01:00:05.392] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/it?user=admin color: rgb(120, 120, 120) color: inherit {"dp":"/it","o":"http://localhost:3000/it?user=admin","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765553939324}
+[01:01:49.174] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:01:50.328] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:01:50.328] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[01:01:50.328] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765554044419}
+[01:01:51.719] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:01:52.535] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:01:52.535] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/student","route":"/student"}
+[01:01:52.535] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/student?email=ldoctorabdallah%40gmail.com color: rgb(120, 120, 120) color: inherit {"dp":"/student","o":"http://localhost:3000/student?email=ldoctorabdallah%40gmail.com","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765554046624}
+[01:02:01.618] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:02:02.210] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:02:02.210] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[01:02:02.210] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765554056301}
+[01:03:43.245] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:03:44.054] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:03:44.054] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/it","route":"/it"}
+[01:03:44.054] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/it?user=admin color: rgb(120, 120, 120) color: inherit {"dp":"/it","o":"http://localhost:3000/it?user=admin","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765554157977}
+[01:03:50.793] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:03:51.518] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:03:51.518] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[01:03:51.518] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765554165609}
+[01:03:53.747] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:03:54.631] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:03:54.631] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/student","route":"/student"}
+[01:03:54.631] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/student?email=ldoctorabdallah%40gmail.com color: rgb(120, 120, 120) color: inherit {"dp":"/student","o":"http://localhost:3000/student?email=ldoctorabdallah%40gmail.com","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765554168595}
+[01:04:09.979] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:04:10.555] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:04:10.555] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[01:04:10.555] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765554184646}

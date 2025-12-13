@@ -1,0 +1,330 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Professional color palette inspired by modern design systems - optimized for long-term use */
+:root {
+  /* Clean neutral backgrounds */
+  --background: oklch(0.99 0 0);
+  --foreground: oklch(0.2 0.01 240);
+
+  /* Crisp card surfaces */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.01 240);
+
+  /* Popover surfaces */
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.01 240);
+
+  /* Vibrant blue primary - professional and energetic */
+  --primary: oklch(0.55 0.18 250);
+  --primary-foreground: oklch(0.99 0 0);
+
+  /* Soft purple secondary for accents */
+  --secondary: oklch(0.58 0.16 280);
+  --secondary-foreground: oklch(0.99 0 0);
+
+  /* Subtle gray muted tones */
+  --muted: oklch(0.965 0.002 240);
+  --muted-foreground: oklch(0.48 0.015 240);
+
+  /* Bright teal accent */
+  --accent: oklch(0.6 0.15 210);
+  --accent-foreground: oklch(0.99 0 0);
+
+  /* Softer destructive red */
+  --destructive: oklch(0.58 0.2 20);
+  --destructive-foreground: oklch(0.99 0 0);
+
+  /* Delicate borders */
+  --border: oklch(0.93 0.002 240);
+  --input: oklch(0.98 0.001 240);
+  --ring: oklch(0.55 0.18 250);
+
+  /* Vibrant chart colors */
+  --chart-1: oklch(0.55 0.18 250);
+  --chart-2: oklch(0.6 0.15 210);
+  --chart-3: oklch(0.58 0.16 280);
+  --chart-4: oklch(0.62 0.14 190);
+  --chart-5: oklch(0.57 0.17 310);
+
+  --radius: 0.75rem;
+
+  --sidebar: oklch(0.99 0 0);
+  --sidebar-foreground: oklch(0.2 0 0);
+  --sidebar-primary: oklch(0.25 0 0);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.25 0 0);
+  --sidebar-border: oklch(0.93 0 0);
+  --sidebar-ring: oklch(0.7 0 0);
+}
+
+/* Professional dark mode - easy on the eyes */
+.dark {
+  --background: oklch(0.13 0.008 240);
+  --foreground: oklch(0.95 0.005 240);
+
+  --card: oklch(0.16 0.01 240);
+  --card-foreground: oklch(0.95 0.005 240);
+
+  --popover: oklch(0.16 0.01 240);
+  --popover-foreground: oklch(0.95 0.005 240);
+
+  --primary: oklch(0.62 0.19 250);
+  --primary-foreground: oklch(0.13 0.008 240);
+
+  --secondary: oklch(0.64 0.17 280);
+  --secondary-foreground: oklch(0.13 0.008 240);
+
+  --muted: oklch(0.2 0.01 240);
+  --muted-foreground: oklch(0.68 0.012 240);
+
+  --accent: oklch(0.65 0.16 210);
+  --accent-foreground: oklch(0.13 0.008 240);
+
+  --destructive: oklch(0.6 0.22 20);
+  --destructive-foreground: oklch(0.95 0.005 240);
+
+  --border: oklch(0.23 0.01 240);
+  --input: oklch(0.18 0.01 240);
+  --ring: oklch(0.62 0.19 250);
+
+  --chart-1: oklch(0.62 0.19 250);
+  --chart-2: oklch(0.65 0.16 210);
+  --chart-3: oklch(0.64 0.17 280);
+  --chart-4: oklch(0.66 0.15 190);
+  --chart-5: oklch(0.61 0.18 310);
+
+  --sidebar: oklch(0.16 0 0);
+  --sidebar-foreground: oklch(0.95 0 0);
+  --sidebar-primary: oklch(0.62 0.19 250);
+  --sidebar-primary-foreground: oklch(0.13 0 0);
+  --sidebar-accent: oklch(0.22 0 0);
+  --sidebar-accent-foreground: oklch(0.95 0 0);
+  --sidebar-border: oklch(0.23 0 0);
+  --sidebar-ring: oklch(0.45 0 0);
+}
+
+@theme inline {
+  /* optional: --font-sans, --font-serif, --font-mono if they are applied in the layout.tsx */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Modern utility classes with smooth interactions */
+@layer utilities {
+  .input-modern {
+    @apply h-11 px-4 py-2.5 border-2 border-border bg-input text-foreground placeholder:text-muted-foreground rounded-xl transition-all duration-300 focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/20 hover:border-primary/60 shadow-sm;
+  }
+
+  /* Enhanced select dropdown with better styling */
+  .select-modern {
+    @apply h-11 px-4 py-2.5 border-2 border-border bg-input text-foreground rounded-xl transition-all duration-300 focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/20 hover:border-primary/60 appearance-none cursor-pointer font-medium shadow-sm;
+    padding-right: 40px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none' stroke='%235B8DEF' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px;
+  }
+
+  .dark .select-modern {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none' stroke='%2370A8FF' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+  }
+
+  .textarea-modern {
+    @apply px-4 py-3 border-2 border-border bg-input text-foreground placeholder:text-muted-foreground rounded-xl transition-all duration-300 focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/20 hover:border-primary/60 min-h-28 resize-none font-medium shadow-sm;
+  }
+
+  /* Clean upload zone */
+  .upload-zone {
+    @apply border-2 border-dashed border-border rounded-xl p-8 text-center transition-all duration-300 bg-muted/30 hover:border-primary/60 hover:bg-primary/5 cursor-pointer;
+  }
+
+  .upload-zone.active {
+    @apply border-primary bg-primary/10 shadow-lg scale-[1.02];
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-xl hover:border-primary/40 hover:scale-[1.01];
+  }
+
+  /* Status badge with updated colors */
+  .status-badge-open {
+    @apply bg-accent/15 text-accent border border-accent/30;
+  }
+
+  .status-badge-assigned {
+    @apply bg-primary/15 text-primary border border-primary/30;
+  }
+
+  .status-badge-in-progress {
+    @apply bg-secondary/15 text-secondary border border-secondary/30;
+  }
+
+  .status-badge-resolved {
+    @apply bg-green-500/15 text-green-600 border border-green-500/30;
+  }
+
+  .status-badge-closed {
+    @apply bg-gray-500/15 text-gray-600 border border-gray-500/30;
+  }
+}
+
+/* Enhanced animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(91, 141, 239, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(91, 141, 239, 0);
+  }
+}
+
+/* Added bounce-in animation for success messages */
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.animate-fade-in-scale {
+  animation: fadeInScale 0.4s ease-out;
+}
+
+.animate-slide-in-bottom {
+  animation: slideInFromBottom 0.5s ease-out;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+/* Added bounce-in class for success messages */
+.animate-bounce-in {
+  animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Celebration confetti - shooting from left and right edges */
+@keyframes confetti-left {
+  from {
+    transform: translateX(0) translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(calc(-50vw + var(--dx))) translateY(calc(100vh + var(--dy))) rotate(var(--rotation));
+    opacity: 0;
+  }
+}
+
+@keyframes confetti-right {
+  from {
+    transform: translateX(0) translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(calc(50vw + var(--dx))) translateY(calc(100vh + var(--dy))) rotate(var(--rotation));
+    opacity: 0;
+  }
+}
+
+.confetti-left {
+  animation: confetti-left 2.5s ease-out forwards;
+}
+
+.confetti-right {
+  animation: confetti-right 2.5s ease-out forwards;
+}
