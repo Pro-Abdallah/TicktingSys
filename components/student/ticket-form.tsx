@@ -2,351 +2,562 @@
 
 import type React from "react"
 import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
 import { createTicket } from "@/lib/ticket-data"
-import type { Department, IssueType, StudentYear, DeviceType, IssueCategory } from "@/lib/types"
-import { HelpCircle, X, CheckCircle } from "lucide-react"
+import { CheckCircle, ChevronLeft, ChevronRight, HelpCircle, Monitor, Wifi, Battery, MousePointer, X } from "lucide-react"
+
+// --- Zod Schema ---
+const ticketSchema = z.object({
+  studentName: z.string().min(2, "Name must be at least 2 characters"),
+  department: z.enum(["IS", "CS"]),
+  year: z.enum(["senior", "wheeler", "junior"]),
+  classYear: z.string().min(1, "Please select your class"),
+  instructorName: z.string().min(2, "Instructor name is required"),
+  deviceType: z.string().min(1, "Please select your device type"),
+  // Strict IPv4 validation regex
+  deviceIpAddress: z.string().regex(
+    /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/,
+    "Invalid IP address (e.g., 192.168.1.50)"
+  ),
+  issueCategory: z.string().min(1, "Please select an issue category"),
+  issueDescription: z.string().min(10, "Please provide more details about the issue"),
+})
+
+type TicketValues = z.infer<typeof ticketSchema>
+
+const defaultValues: Partial<TicketValues> = {
+  department: "IS",
+  year: "senior",
+  deviceType: "HP Zbook G3",
+  issueCategory: "software",
+}
 
 interface TicketFormProps {
   onTicketCreated: () => void
 }
 
+const QUICK_PICKS = [
+  {
+    icon: <Wifi className="w-4 h-4" />,
+    label: "No Wi-Fi",
+    description: "I cannot connect to the school network.",
+    category: "software",
+  },
+  {
+    icon: <Monitor className="w-4 h-4" />,
+    label: "Broken Screen",
+    description: "My laptop screen is cracked or not turning on.",
+    category: "hardware",
+  },
+  {
+    icon: <Battery className="w-4 h-4" />,
+    label: "Battery Issue",
+    description: "My laptop battery drains very fast or doesn't charge.",
+    category: "hardware",
+  },
+  {
+    icon: <MousePointer className="w-4 h-4" />,
+    label: "Trackpad/Mouse",
+    description: "My trackpad cursor is freezing or jumping around.",
+    category: "hardware",
+  },
+]
+
 export default function TicketForm({ onTicketCreated }: TicketFormProps) {
-  const [loading, setLoading] = useState(false)
+  const [currentStep, setCurrentStep] = useState(1)
   const [showIPHelper, setShowIPHelper] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
-  const [formData, setFormData] = useState({
-    studentName: "",
-    department: "IS" as Department,
-    year: "senior" as StudentYear,
-    classYear: "",
-    instructorName: "",
-    deviceType: "HP Zbook G3" as DeviceType,
-    deviceIpAddress: "",
-    issueDescription: "",
-    issueType: "software" as IssueType,
-    issueCategory: "software" as IssueCategory,
+  const [loading, setLoading] = useState(false)
+
+  const form = useForm<TicketValues>({
+    resolver: zodResolver(ticketSchema),
+    defaultValues,
+    mode: "onChange",
   })
 
+  const { watch, setValue, trigger } = form
+  const watchedYear = watch("year")
+
+  // Calculate generic class options based on year
   const getClassOptions = () => {
-    const yearNum = Number.parseInt(formData.year === "senior" ? "4" : formData.year === "wheeler" ? "5" : "3")
-    const baseNum = formData.year === "senior" ? 1 : formData.year === "wheeler" ? 1 : 1
+    const yearNum = watchedYear === "senior" ? 4 : watchedYear === "wheeler" ? 5 : 3
+    const baseNum = 1
     return Array.from({ length: 4 }, (_, i) => ({
-      value: `${formData.year.charAt(0).toUpperCase() + formData.year.slice(1)} ${baseNum + i}`,
-      label: `${formData.year.charAt(0).toUpperCase() + formData.year.slice(1)} ${baseNum + i}`,
+      value: `${watchedYear.charAt(0).toUpperCase() + watchedYear.slice(1)} ${baseNum + i}`,
+      label: `${watchedYear.charAt(0).toUpperCase() + watchedYear.slice(1)} ${baseNum + i}`,
     }))
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
+  // --- Handlers ---
+  const handleIpChange = (e: React.ChangeEvent<HTMLInputElement>, fieldChange: (value: string) => void) => {
+    let value = e.target.value
 
+    // Allow only numbers and dots
+    value = value.replace(/[^0-9.]/g, "")
+
+    // Split into segments
+    const segments = value.split(".")
+
+    // Enforce max 4 segments
+    if (segments.length > 4) {
+      // If we have more than 4 segments, truncate the value
+      value = segments.slice(0, 4).join(".")
+    }
+
+    // Auto-add dot after 3 digits
+    // Logic: check the last typed char. If it was a digit, and the current segment is now 3 digits, append dot.
+    // However, that might be annoying if user is backspacing.
+    // A simpler approach for the "after each 3 numbers" rule:
+
+    // We only modify if the user is ADDING characters (not deleting)
+    // But detecting add vs delete in simple change handler is tricky without prev state.
+    // Let's use successful pattern matching.
+
+    // If the input ends with 3 digits, and the number of dots is less than 3, add a dot.
+    if (/\d{3}$/.test(value) && (value.match(/\./g) || []).length < 3) {
+      value += "."
+    }
+
+    // Also strictly limit each segment to 3 chars length (technically Zod handles value 255 but UI can stop length)
+    // Re-split to check segment lengths
+    const checkedSegments = value.split(".").map(seg => seg.slice(0, 3))
+    value = checkedSegments.join(".").replace(/\.{2,}/g, ".") // prevent double dots
+
+    fieldChange(value)
+  }
+
+  const handleNext = async () => {
+    let valid = false
+    if (currentStep === 1) {
+      valid = await trigger(["studentName", "department", "year", "classYear", "instructorName"])
+    } else if (currentStep === 2) {
+      valid = await trigger(["deviceType", "deviceIpAddress"])
+    }
+
+    if (valid) {
+      setCurrentStep((prev) => prev + 1)
+    }
+  }
+
+  const handleBack = () => {
+    setCurrentStep((prev) => prev - 1)
+  }
+
+  const handleQuickPick = (pick: typeof QUICK_PICKS[0]) => {
+    setValue("issueCategory", pick.category)
+    setValue("issueDescription", pick.description)
+  }
+
+  const onSubmit = async (data: TicketValues) => {
+    setLoading(true)
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500))
+      await new Promise((resolve) => setTimeout(resolve, 800))
+
       const studentId = `STU-${Math.random().toString(36).substr(2, 9).toUpperCase()}`
+
       createTicket({
         studentId,
-        studentName: formData.studentName,
-        studentEmail: `${formData.studentName.toLowerCase().replace(/\s+/g, ".")}@school.edu`,
-        department: formData.department,
-        year: formData.year,
-        classYear: formData.classYear,
-        instructorName: formData.instructorName,
-        deviceType: formData.deviceType,
-        deviceIpAddress: formData.deviceIpAddress,
-        issueDescription: formData.issueDescription,
-        issueType: formData.issueType,
-        issueCategory: formData.issueCategory,
+        studentName: data.studentName,
+        studentEmail: `${data.studentName.toLowerCase().replace(/\s+/g, ".")}@school.edu`,
+        department: data.department as any,
+        year: data.year as any,
+        classYear: data.classYear,
+        instructorName: data.instructorName,
+        deviceType: data.deviceType as any,
+        deviceIpAddress: data.deviceIpAddress,
+        issueDescription: data.issueDescription,
+        issueType: data.issueCategory as any,
+        issueCategory: data.issueCategory as any,
         status: "open",
         isExternal: false,
       } as any)
 
       setShowSuccess(true)
       setTimeout(() => {
-        setFormData({
-          studentName: "",
-          department: "IS",
-          year: "senior",
-          classYear: "",
-          instructorName: "",
-          deviceType: "HP Zbook G3",
-          deviceIpAddress: "",
-          issueDescription: "",
-          issueType: "software",
-          issueCategory: "software",
-        })
-        setShowSuccess(false)
         onTicketCreated()
-      }, 1500)
+      }, 2000)
     } finally {
       setLoading(false)
     }
   }
 
+  const progressPercentage = ((currentStep - 1) / 2) * 100
+
   return (
     <>
       {showSuccess && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none animate-fade-in">
-          <div className="bg-card border-2 border-primary rounded-2xl shadow-2xl p-8 flex items-center gap-4 animate-bounce-in">
-            <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center">
-              <CheckCircle className="w-10 h-10 text-primary" />
+        <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none animate-in fade-in duration-300">
+          <div className="bg-card border-2 border-primary rounded-2xl shadow-2xl p-8 flex flex-col items-center gap-4 animate-in zoom-in-95 duration-300 pointer-events-auto">
+            <div className="w-20 h-20 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-2">
+              <CheckCircle className="w-10 h-10 text-green-600 dark:text-green-400" />
             </div>
-            <div>
-              <h3 className="text-xl font-bold text-foreground">Ticket Submitted!</h3>
-              <p className="text-sm text-muted-foreground">We'll get back to you soon</p>
+            <div className="text-center">
+              <h3 className="text-2xl font-bold text-foreground">Ticket Submitted!</h3>
+              <p className="text-muted-foreground mt-2">Help is on the way.</p>
             </div>
           </div>
         </div>
       )}
 
-      <Card className="border-2 border-border shadow-xl rounded-2xl bg-card animate-fade-in">
-        <CardHeader className="border-b-2 border-border pb-6 bg-gradient-to-r from-primary/10 to-accent/10">
-          <CardTitle className="text-3xl font-bold text-foreground">Submit a Support Ticket</CardTitle>
-          <CardDescription className="text-base mt-2">
-            Fill out the form below to get help with your device issue on TikTrack
-          </CardDescription>
+      <Card className="border-none shadow-xl bg-card/50 backdrop-blur-sm relative overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-1.5 bg-muted">
+          <div
+            className="h-full bg-primary transition-all duration-500 ease-out"
+            style={{ width: `${progressPercentage}%` }}
+          />
+        </div>
+
+        <CardHeader className="pt-8">
+          <div className="flex justify-between items-center mb-2">
+            <div>
+              <CardTitle className="text-2xl font-bold">New Support Ticket</CardTitle>
+              <CardDescription>
+                Step {currentStep} of 3: {currentStep === 1 ? "Your Info" : currentStep === 2 ? "Device Info" : "Issue Details"}
+              </CardDescription>
+            </div>
+            <div className="text-sm font-semibold text-muted-foreground bg-muted px-3 py-1 rounded-full">
+              {currentStep === 1 && "Identity"}
+              {currentStep === 2 && "Device"}
+              {currentStep === 3 && "Problem"}
+            </div>
+          </div>
         </CardHeader>
 
-        <CardContent className="pt-8">
-          <form onSubmit={handleSubmit} className="space-y-8">
-            {/* Personal Information Section */}
-            <div className="space-y-5">
-              <h3 className="text-lg font-bold text-foreground flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-primary/70 text-primary-foreground text-sm font-bold flex items-center justify-center shadow-lg">
-                  1
-                </div>
-                Your Information
-              </h3>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div>
-                  <Label className="text-sm font-semibold text-foreground block mb-2">Full Name *</Label>
-                  <Input
-                    value={formData.studentName}
-                    onChange={(e) => setFormData({ ...formData, studentName: e.target.value })}
-                    placeholder="John Doe"
-                    required
-                    className="input-modern"
-                  />
-                </div>
-                <div>
-                  <Label className="text-sm font-semibold text-foreground block mb-2">Instructor Name *</Label>
-                  <Input
-                    value={formData.instructorName}
-                    onChange={(e) => setFormData({ ...formData, instructorName: e.target.value })}
-                    placeholder="Dr. Smith"
-                    required
-                    className="input-modern"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div>
-                  <Label className="text-sm font-semibold text-foreground block mb-2">Department *</Label>
-                  <select
-                    value={formData.department}
-                    onChange={(e) => setFormData({ ...formData, department: e.target.value as Department })}
-                    className="select-modern w-full"
-                    required
-                  >
-                    <option value="IS">Information Systems</option>
-                    <option value="CS">Computer Science</option>
-                  </select>
-                </div>
-                <div>
-                  <Label className="text-sm font-semibold text-foreground block mb-2">Year *</Label>
-                  <select
-                    value={formData.year}
-                    onChange={(e) => setFormData({ ...formData, year: e.target.value as StudentYear, classYear: "" })}
-                    className="select-modern w-full"
-                    required
-                  >
-                    <option value="senior">Senior</option>
-                    <option value="wheeler">Wheeler</option>
-                    <option value="junior">Junior</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <Label className="text-sm font-semibold text-foreground block mb-2">Class *</Label>
-                <select
-                  value={formData.classYear}
-                  onChange={(e) => setFormData({ ...formData, classYear: e.target.value })}
-                  className="select-modern w-full"
-                  required
-                >
-                  <option value="">Select your class</option>
-                  {getClassOptions().map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            {/* Device Information Section */}
-            <div className="space-y-5 pt-4 border-t-2 border-border/50">
-              <h3 className="text-lg font-bold text-foreground flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-secondary to-secondary/70 text-secondary-foreground text-sm font-bold flex items-center justify-center shadow-lg">
-                  2
-                </div>
-                Device Details
-              </h3>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div>
-                  <Label className="text-sm font-semibold text-foreground block mb-2">Device Type *</Label>
-                  <select
-                    value={formData.deviceType}
-                    onChange={(e) => setFormData({ ...formData, deviceType: e.target.value as DeviceType })}
-                    className="select-modern w-full"
-                    required
-                  >
-                    <option value="HP Zbook G3">HP Zbook G3</option>
-                    <option value="HP Silver">HP Silver</option>
-                    <option value="Dell Latitude">Dell Latitude</option>
-                  </select>
-                </div>
-                <div>
-                  <Label className="text-sm font-semibold text-foreground block mb-2">IP Address *</Label>
-                  <Input
-                    value={formData.deviceIpAddress}
-                    onChange={(e) => setFormData({ ...formData, deviceIpAddress: e.target.value })}
-                    placeholder="192.168.1.100"
-                    required
-                    className="input-modern"
-                  />
-                </div>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => setShowIPHelper(true)}
-                className="text-sm text-primary hover:text-primary/80 font-semibold flex items-center gap-1 transition-colors"
-              >
-                <HelpCircle className="w-4 h-4" />
-                Need help finding your IP address?
-              </button>
-            </div>
-
-            {/* Issue Details Section */}
-            <div className="space-y-5 pt-4 border-t-2 border-border/50">
-              <h3 className="text-lg font-bold text-foreground flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-accent to-accent/70 text-accent-foreground text-sm font-bold flex items-center justify-center shadow-lg">
-                  3
-                </div>
-                Problem Description
-              </h3>
-
-              <div>
-                <Label className="text-sm font-semibold text-foreground block mb-2">Issue Category *</Label>
-                <select
-                  value={formData.issueCategory}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      issueCategory: e.target.value as IssueCategory,
-                      issueType: e.target.value as IssueType,
-                    })
-                  }
-                  className="select-modern w-full"
-                  required
-                >
-                  <option value="software">Software Issue</option>
-                  <option value="hardware">Hardware Issue</option>
-                </select>
-              </div>
-
-              <div>
-                <Label className="text-sm font-semibold text-foreground block mb-2">Describe the Problem *</Label>
-                <Textarea
-                  value={formData.issueDescription}
-                  onChange={(e) => setFormData({ ...formData, issueDescription: e.target.value })}
-                  placeholder="Tell us what's happening with your device..."
-                  className="textarea-modern"
-                  required
-                />
-              </div>
-            </div>
-
-            {/* Submit Button */}
-            <div className="flex gap-3 pt-6 border-t-2 border-border">
-              <Button
-                type="submit"
-                disabled={loading}
-                className="flex-1 h-12 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-bold rounded-xl shadow-lg hover:shadow-xl transition-all disabled:opacity-50 text-base"
-              >
-                {loading ? "Submitting..." : "Submit Ticket"}
-              </Button>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
-
-      {/* IP Address Helper Modal */}
-      {showIPHelper && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in">
-          <Card className="w-full max-w-2xl rounded-2xl border-2 border-border shadow-2xl animate-slide-in-bottom">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4 border-b-2 border-border bg-gradient-to-r from-primary/10 to-accent/10">
-              <div>
-                <CardTitle className="text-xl font-bold">Find Your Device IP Address</CardTitle>
-              </div>
-              <button
-                onClick={() => setShowIPHelper(false)}
-                className="text-muted-foreground hover:text-foreground transition-colors rounded-lg p-2 hover:bg-muted"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </CardHeader>
-            <CardContent className="space-y-6 py-6">
-              {[
-                {
-                  title: "Open Command Prompt",
-                  content: "Press Windows key + R, type 'cmd' and press Enter.",
-                },
-                {
-                  title: "Type Command",
-                  content: "Copy and paste this command:",
-                  code: "ipconfig",
-                },
-                {
-                  title: "Find IPv4 Address",
-                  content: 'Look for "IPv4 Address" in the results - this is your device IP.',
-                },
-              ].map((step, index) => (
-                <div key={index} className="space-y-2">
-                  <div className="flex gap-4">
-                    <div className="flex-shrink-0 w-9 h-9 bg-gradient-to-br from-primary to-primary/70 text-primary-foreground rounded-full flex items-center justify-center font-bold text-sm shadow-lg">
-                      {index + 1}
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-foreground text-base">{step.title}</h4>
-                      <p className="text-sm text-muted-foreground mb-2">{step.content}</p>
-                      {step.code && (
-                        <code className="block bg-muted p-3 rounded-lg text-sm font-mono text-foreground border border-border">
-                          {step.code}
-                        </code>
+              {currentStep === 1 && (
+                <div className="space-y-4 animate-in slide-in-from-right-8 fade-in duration-300">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField
+                      control={form.control}
+                      name="studentName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Full Name</FormLabel>
+                          <FormControl>
+                            <Input placeholder="John Doe" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
                       )}
-                    </div>
+                    />
+                    <FormField
+                      control={form.control}
+                      name="instructorName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Instructor</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Dr. Smith" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <FormField
+                      control={form.control}
+                      name="department"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Department</FormLabel>
+                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select dept" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="IS">Information Systems</SelectItem>
+                              <SelectItem value="CS">Computer Science</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="year"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Year</FormLabel>
+                          <Select
+                            onValueChange={(val) => {
+                              field.onChange(val)
+                              setValue("classYear", "")
+                            }}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select year" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="senior">Senior</SelectItem>
+                              <SelectItem value="wheeler">Wheeler</SelectItem>
+                              <SelectItem value="junior">Junior</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="classYear"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Class</FormLabel>
+                          <Select onValueChange={field.onChange} value={field.value || ""}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select class" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {getClassOptions().map((opt) => (
+                                <SelectItem key={opt.value} value={opt.value}>
+                                  {opt.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                   </div>
                 </div>
-              ))}
+              )}
+
+              {currentStep === 2 && (
+                <div className="space-y-6 animate-in slide-in-from-right-8 fade-in duration-300">
+                  <FormField
+                    control={form.control}
+                    name="deviceType"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Device Model</FormLabel>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                          {["HP Zbook G3", "HP Silver", "Dell Latitude"].map((device) => (
+                            <div
+                              key={device}
+                              onClick={() => field.onChange(device)}
+                              className={`cursor-pointer border-2 rounded-xl p-4 flex flex-col items-center justify-center gap-2 hover:bg-muted/50 transition-all ${field.value === device ? "border-primary bg-primary/5 shadow-sm" : "border-border"
+                                }`}
+                            >
+                              <div className={`p-3 rounded-full ${field.value === device ? "bg-primary text-primary-foreground" : "bg-muted"}`}>
+                                <Monitor className="w-5 h-5" />
+                              </div>
+                              <span className="font-semibold text-sm">{device}</span>
+                            </div>
+                          ))}
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="deviceIpAddress"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>IP Address</FormLabel>
+                        <FormControl>
+                          <div className="relative">
+                            <Input
+                              placeholder="192.168.1.1"
+                              {...field}
+                              onChange={(e) => handleIpChange(e, field.onChange)}
+                              maxLength={15} // 3*4 + 3 dots
+                              className="pr-24 font-mono tracking-wide"
+                            />
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              className="absolute right-1 top-1 h-7 text-xs text-primary hover:text-primary/80"
+                              onClick={() => setShowIPHelper(true)}
+                            >
+                              <HelpCircle className="w-3 h-3 mr-1" />
+                              Help?
+                            </Button>
+                          </div>
+                        </FormControl>
+                        <FormDescription>
+                          We'll automatically add dots after 3 numbers.
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              )}
+
+              {currentStep === 3 && (
+                <div className="space-y-6 animate-in slide-in-from-right-8 fade-in duration-300">
+
+                  <div className="space-y-2">
+                    <Label className="text-sm text-muted-foreground uppercase tracking-wider font-semibold">Quick Picks</Label>
+                    <div className="grid grid-cols-2 gap-3">
+                      {QUICK_PICKS.map((pick) => (
+                        <button
+                          key={pick.label}
+                          type="button"
+                          onClick={() => handleQuickPick(pick)}
+                          className="text-left p-3 border rounded-lg hover:bg-muted/50 transition-colors group flex gap-3 items-start"
+                        >
+                          <div className="p-2 bg-primary/10 text-primary rounded-md group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                            {pick.icon}
+                          </div>
+                          <div>
+                            <div className="font-semibold text-sm">{pick.label}</div>
+                            <div className="text-xs text-muted-foreground line-clamp-1">{pick.description}</div>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="h-px bg-border" />
+
+                  <FormField
+                    control={form.control}
+                    name="issueCategory"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Issue Category</FormLabel>
+                        <Select onValueChange={field.onChange} value={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select category" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="software">Software (Apps, OS, Login)</SelectItem>
+                            <SelectItem value="hardware">Hardware (Screen, Battery, Keyboard)</SelectItem>
+                            <SelectItem value="network">Network (Wi-Fi, Internet)</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="issueDescription"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Problem Description</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            placeholder="Please describe exactly what is happening..."
+                            className="min-h-[120px] resize-none"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              )}
+            </form>
+          </Form>
+        </CardContent>
+
+        <CardFooter className="flex justify-between border-t p-6 bg-muted/20">
+          <Button
+            variant="outline"
+            onClick={handleBack}
+            disabled={currentStep === 1 || loading}
+            className="w-[100px]"
+          >
+            <ChevronLeft className="w-4 h-4 mr-2" />
+            Back
+          </Button>
+
+          {currentStep < 3 ? (
+            <Button onClick={handleNext} className="w-[100px]">
+              Next
+              <ChevronRight className="w-4 h-4 ml-2" />
+            </Button>
+          ) : (
+            <Button
+              onClick={form.handleSubmit(onSubmit)}
+              disabled={loading}
+              className="w-[140px] bg-primary hover:bg-primary/90"
+            >
+              {loading ? "Submitting..." : "Submit Ticket"}
+              {!loading && <CheckCircle className="w-4 h-4 ml-2" />}
+            </Button>
+          )}
+        </CardFooter>
+      </Card>
+
+      {showIPHelper && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in">
+          <Card className="w-full max-w-md relative animate-in slide-in-from-bottom-8">
+            <button
+              onClick={() => setShowIPHelper(false)}
+              className="absolute right-4 top-4 text-muted-foreground hover:text-foreground"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <CardHeader>
+              <CardTitle>Find Your IP Address</CardTitle>
+              <CardDescription>Follow these steps on your Windows device</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex gap-3">
+                <div className="flex-none w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs">1</div>
+                <p className="text-sm">Press <kbd className="px-1.5 py-0.5 bg-muted rounded border text-xs">Win + R</kbd></p>
+              </div>
+              <div className="flex gap-3">
+                <div className="flex-none w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs">2</div>
+                <p className="text-sm">Type <code className="text-primary font-mono">cmd</code> and hit Enter</p>
+              </div>
+              <div className="flex gap-3">
+                <div className="flex-none w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs">3</div>
+                <div className="space-y-1">
+                  <p className="text-sm">Type <code className="text-primary font-mono">ipconfig</code> and hit Enter</p>
+                </div>
+              </div>
+              <div className="flex gap-3">
+                <div className="flex-none w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs">4</div>
+                <p className="text-sm">Look for <strong>IPv4 Address</strong> (e.g., 10.0.0.5)</p>
+              </div>
             </CardContent>
-            <div className="border-t-2 border-border p-4">
-              <Button
-                onClick={() => setShowIPHelper(false)}
-                className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground rounded-xl font-bold shadow-lg"
-              >
-                Got It
-              </Button>
-            </div>
+            <CardFooter>
+              <Button onClick={() => setShowIPHelper(false)} className="w-full">Got it</Button>
+            </CardFooter>
           </Card>
         </div>
       )}

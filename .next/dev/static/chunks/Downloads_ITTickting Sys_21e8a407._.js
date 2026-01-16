@@ -883,58 +883,108 @@ __turbopack_context__.s([
     ()=>triggerCelebration
 ]);
 function triggerCelebration() {
-    // Create container for video - transparent, no backdrop
-    const container = document.createElement("div");
-    container.className = "fixed inset-0 pointer-events-none z-[100]";
-    container.style.backgroundColor = "transparent";
-    document.body.appendChild(container);
-    // Create video element - fullscreen
-    const video = document.createElement("video");
-    video.src = "/chroma-keyed-video (1).webm";
-    video.autoplay = true;
-    video.muted = false;
-    video.loop = false;
-    video.playsInline = true;
-    video.style.width = "100%";
-    video.style.height = "100%";
-    video.style.objectFit = "cover";
-    video.style.pointerEvents = "none";
-    // Play the video
-    video.play().catch((err)=>{
-        console.error("Failed to play celebration video:", err);
-        // Try with muted if autoplay fails
-        video.muted = true;
-        video.play().catch((e)=>{
-            console.error("Failed to play muted video:", e);
-            if (container.parentNode) {
-                document.body.removeChild(container);
+    // Create canvas container
+    const canvas = document.createElement("canvas");
+    canvas.style.position = "fixed";
+    canvas.style.inset = "0";
+    canvas.style.pointerEvents = "none";
+    canvas.style.zIndex = "100";
+    canvas.style.width = "100vw";
+    canvas.style.height = "100vh";
+    document.body.appendChild(canvas);
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    // Resize handler
+    const resize = ()=>{
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    };
+    window.addEventListener("resize", resize);
+    resize();
+    // Configuration
+    const particleCount = 150;
+    const colors = [
+        "#ff0000",
+        "#00ff00",
+        "#0000ff",
+        "#ffff00",
+        "#00ffff",
+        "#ff00ff",
+        "#ffa500"
+    ];
+    // Particle Class
+    class Particle {
+        x;
+        y;
+        vx;
+        vy;
+        color;
+        size;
+        rotation;
+        rotationSpeed;
+        opacity;
+        constructor(){
+            this.x = canvas.width / 2;
+            this.y = canvas.height / 2;
+            const angle = Math.random() * Math.PI * 2;
+            const speed = Math.random() * 15 + 10 // Explosion speed
+            ;
+            this.vx = Math.cos(angle) * speed;
+            this.vy = Math.sin(angle) * speed - 5; // Initial upward bias
+            this.color = colors[Math.floor(Math.random() * colors.length)];
+            this.size = Math.random() * 8 + 4;
+            this.rotation = Math.random() * 360;
+            this.rotationSpeed = (Math.random() - 0.5) * 10;
+            this.opacity = 1;
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            this.vy += 0.5; // Gravity
+            this.vx *= 0.96; // Air resistance
+            this.vy *= 0.96;
+            this.rotation += this.rotationSpeed;
+            this.opacity -= 0.008; // Fade out
+        }
+        draw() {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.rotation * Math.PI / 180);
+            ctx.globalAlpha = this.opacity;
+            ctx.fillStyle = this.color;
+            ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+            ctx.restore();
+        }
+    }
+    // Create particles
+    const particles = [];
+    for(let i = 0; i < particleCount; i++){
+        particles.push(new Particle());
+    }
+    // Animation Loop
+    let animationId;
+    const animate = ()=>{
+        if (!ctx) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for(let i = particles.length - 1; i >= 0; i--){
+            const p = particles[i];
+            p.update();
+            p.draw();
+            if (p.opacity <= 0) {
+                particles.splice(i, 1);
             }
-        });
-    });
-    // Remove container when video ends
-    video.addEventListener("ended", ()=>{
-        if (container.parentNode) {
-            document.body.removeChild(container);
         }
-    });
-    // Handle video errors
-    video.addEventListener("error", (e)=>{
-        console.error("Failed to load celebration video:", e);
-        if (container.parentNode) {
-            document.body.removeChild(container);
+        if (particles.length > 0) {
+            animationId = requestAnimationFrame(animate);
+        } else {
+            // Cleanup
+            window.removeEventListener("resize", resize);
+            if (canvas.parentNode) {
+                document.body.removeChild(canvas);
+            }
         }
-    });
-    // Handle video load
-    video.addEventListener("loadeddata", ()=>{
-        console.log("Celebration video loaded successfully");
-    });
-    container.appendChild(video);
-    // Fallback: remove after 15 seconds if video doesn't end properly
-    setTimeout(()=>{
-        if (container.parentNode) {
-            document.body.removeChild(container);
-        }
-    }, 15000);
+    };
+    animate();
 }
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
@@ -4210,6 +4260,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys
 var __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$lucide$2d$react$40$0$2e$454$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$zap$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Zap$3e$__ = __turbopack_context__.i("[project]/Downloads/ITTickting Sys/node_modules/.pnpm/lucide-react@0.454.0_react@19.2.0/node_modules/lucide-react/dist/esm/icons/zap.js [app-client] (ecmascript) <export default as Zap>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$lucide$2d$react$40$0$2e$454$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$bell$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Bell$3e$__ = __turbopack_context__.i("[project]/Downloads/ITTickting Sys/node_modules/.pnpm/lucide-react@0.454.0_react@19.2.0/node_modules/lucide-react/dist/esm/icons/bell.js [app-client] (ecmascript) <export default as Bell>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$lucide$2d$react$40$0$2e$454$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$plus$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Plus$3e$__ = __turbopack_context__.i("[project]/Downloads/ITTickting Sys/node_modules/.pnpm/lucide-react@0.454.0_react@19.2.0/node_modules/lucide-react/dist/esm/icons/plus.js [app-client] (ecmascript) <export default as Plus>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$lucide$2d$react$40$0$2e$454$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$alert$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertCircle$3e$__ = __turbopack_context__.i("[project]/Downloads/ITTickting Sys/node_modules/.pnpm/lucide-react@0.454.0_react@19.2.0/node_modules/lucide-react/dist/esm/icons/circle-alert.js [app-client] (ecmascript) <export default as AlertCircle>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$components$2f$it$2f$lazy$2d$ticket$2d$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/Downloads/ITTickting Sys/components/it/lazy-ticket-card.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$components$2f$it$2f$dashboard$2d$overview$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/Downloads/ITTickting Sys/components/it/dashboard-overview.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$lib$2f$ticket$2d$data$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/Downloads/ITTickting Sys/lib/ticket-data.ts [app-client] (ecmascript)");
@@ -4230,6 +4281,8 @@ var _s = __turbopack_context__.k.signature();
 ;
 ;
 ;
+// 15 minutes in milliseconds
+const OVERDUE_THRESHOLD = 15 * 60 * 1000;
 function ITDashboard() {
     _s();
     const [tickets, setTickets] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
@@ -4241,12 +4294,14 @@ function ITDashboard() {
     const [showNotificationPrompt, setShowNotificationPrompt] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [isMounted, setIsMounted] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [showAddIssueModal, setShowAddIssueModal] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    // Track notified tickets to avoid spam
+    const notifiedTicketIds = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(new Set());
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "ITDashboard.useEffect": ()=>{
             setIsMounted(true);
         }
     }["ITDashboard.useEffect"], []);
-    // Initial load - show loading spinner
+    // Initial load
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "ITDashboard.useEffect": ()=>{
             const loadTickets = {
@@ -4255,24 +4310,56 @@ function ITDashboard() {
                     setIsInitialLoading(false);
                 }
             }["ITDashboard.useEffect.loadTickets"];
-            // Small delay for initial load only
             const timeout = setTimeout(loadTickets, 200);
             return ({
                 "ITDashboard.useEffect": ()=>clearTimeout(timeout)
             })["ITDashboard.useEffect"];
         }
     }["ITDashboard.useEffect"], []);
-    // Background refresh - update silently without showing loading
+    // Background refresh & Notifications
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "ITDashboard.useEffect": ()=>{
-            if (isInitialLoading) return; // Don't refresh until initial load is done
+            if (isInitialLoading) return;
+            const checkOverdueAndNotify = {
+                "ITDashboard.useEffect.checkOverdueAndNotify": (currentTickets)=>{
+                    if (!("Notification" in window) || Notification.permission !== "granted") return;
+                    const now = Date.now();
+                    const newOverdueTickets = currentTickets.filter({
+                        "ITDashboard.useEffect.checkOverdueAndNotify.newOverdueTickets": (t)=>{
+                            const isOverdue = now - new Date(t.createdAt).getTime() > OVERDUE_THRESHOLD;
+                            const isActive = t.status !== "resolved" && t.status !== "closed";
+                            const notNotified = !notifiedTicketIds.current.has(t.id);
+                            return isOverdue && isActive && notNotified;
+                        }
+                    }["ITDashboard.useEffect.checkOverdueAndNotify.newOverdueTickets"]);
+                    if (newOverdueTickets.length > 0) {
+                        // Play sound
+                        try {
+                            const audio = new Audio("data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU") // Short beep placeholder or real file
+                            ;
+                        // Simple beep using AudioContext is better but for now let's rely on Notification sound
+                        // or just the visual notification
+                        } catch (e) {}
+                        newOverdueTickets.forEach({
+                            "ITDashboard.useEffect.checkOverdueAndNotify": (t)=>{
+                                new Notification("Overdue Ticket Alert", {
+                                    body: `Ticket ${t.id} has been waiting for more than 15 minutes!`,
+                                    icon: "/favicon.ico"
+                                });
+                                notifiedTicketIds.current.add(t.id);
+                            }
+                        }["ITDashboard.useEffect.checkOverdueAndNotify"]);
+                    }
+                }
+            }["ITDashboard.useEffect.checkOverdueAndNotify"];
             const interval = setInterval({
                 "ITDashboard.useEffect.interval": ()=>{
-                    // Silently update tickets in background without showing loading state
-                    setTickets((0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$lib$2f$ticket$2d$data$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getTickets"])());
+                    const currentTickets = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$lib$2f$ticket$2d$data$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getTickets"])();
+                    setTickets(currentTickets);
                     setRefreshKey({
                         "ITDashboard.useEffect.interval": (prev)=>prev + 1
                     }["ITDashboard.useEffect.interval"]);
+                    checkOverdueAndNotify(currentTickets);
                 }
             }["ITDashboard.useEffect.interval"], 5000);
             return ({
@@ -4298,9 +4385,14 @@ function ITDashboard() {
         setHasNotificationPermission(granted);
         setShowNotificationPrompt(false);
     };
+    // Dashboard Check Helper
+    const isOverdue = (ticket)=>{
+        return Date.now() - new Date(ticket.createdAt).getTime() > OVERDUE_THRESHOLD && ticket.status !== "resolved" && ticket.status !== "closed";
+    };
     const filteredTickets = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
         "ITDashboard.useMemo[filteredTickets]": ()=>{
             let allTickets = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$lib$2f$ticket$2d$data$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getTickets"])();
+            // Category Filter
             if (activeTab !== "overview") {
                 allTickets = allTickets.filter({
                     "ITDashboard.useMemo[filteredTickets]": (t)=>{
@@ -4310,8 +4402,10 @@ function ITDashboard() {
                     }
                 }["ITDashboard.useMemo[filteredTickets]"]);
             }
+            // Tab Filter
             if (activeTab === "all") return allTickets;
             if (activeTab === "overview") return allTickets;
+            if (activeTab === "overdue") return allTickets.filter(isOverdue);
             return allTickets.filter({
                 "ITDashboard.useMemo[filteredTickets]": (t)=>t.status === activeTab
             }["ITDashboard.useMemo[filteredTickets]"]);
@@ -4322,6 +4416,7 @@ function ITDashboard() {
         refreshKey
     ]);
     const handleTicketUpdate = ()=>{
+        setTickets((0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$lib$2f$ticket$2d$data$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getTickets"])());
         setRefreshKey((prev)=>prev + 1);
     };
     const handleLogout = ()=>{
@@ -4329,18 +4424,16 @@ function ITDashboard() {
     };
     const statusCounts = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
         "ITDashboard.useMemo[statusCounts]": ()=>{
-            // Only calculate counts after component mounts (client-side only)
-            if (!isMounted) {
-                return {
-                    all: 0,
-                    open: 0,
-                    assigned: 0,
-                    "in-progress": 0,
-                    "waiting-external": 0,
-                    resolved: 0,
-                    closed: 0
-                };
-            }
+            if (!isMounted) return {
+                all: 0,
+                open: 0,
+                assigned: 0,
+                "in-progress": 0,
+                "waiting-external": 0,
+                resolved: 0,
+                closed: 0,
+                overdue: 0
+            };
             const all = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$lib$2f$ticket$2d$data$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getTickets"])();
             return {
                 all: all.length,
@@ -4361,7 +4454,8 @@ function ITDashboard() {
                 }["ITDashboard.useMemo[statusCounts]"]).length,
                 closed: all.filter({
                     "ITDashboard.useMemo[statusCounts]": (t)=>t.status === "closed"
-                }["ITDashboard.useMemo[statusCounts]"]).length
+                }["ITDashboard.useMemo[statusCounts]"]).length,
+                overdue: all.filter(isOverdue).length
             };
         }
     }["ITDashboard.useMemo[statusCounts]"], [
@@ -4385,7 +4479,7 @@ function ITDashboard() {
                                         children: "IT Dashboard"
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                        lineNumber: 126,
+                                        lineNumber: 163,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4393,13 +4487,13 @@ function ITDashboard() {
                                         children: "Manage support requests"
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                        lineNumber: 127,
+                                        lineNumber: 164,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                lineNumber: 125,
+                                lineNumber: 162,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4415,21 +4509,21 @@ function ITDashboard() {
                                                 className: "w-4 h-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                                lineNumber: 136,
+                                                lineNumber: 173,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 className: "hidden sm:inline",
-                                                children: "Add Common Issue"
+                                                children: "Add Issue"
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                                lineNumber: 137,
+                                                lineNumber: 174,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                        lineNumber: 130,
+                                        lineNumber: 167,
                                         columnNumber: 15
                                     }, this),
                                     isMounted && showNotificationPrompt && ("TURBOPACK compile-time value", "object") !== "undefined" && "Notification" in window && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -4442,7 +4536,7 @@ function ITDashboard() {
                                                 className: "w-4 h-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                                lineNumber: 146,
+                                                lineNumber: 183,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4450,13 +4544,13 @@ function ITDashboard() {
                                                 children: "Notifications"
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                                lineNumber: 147,
+                                                lineNumber: 184,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                        lineNumber: 140,
+                                        lineNumber: 177,
                                         columnNumber: 17
                                     }, this),
                                     isMounted && hasNotificationPermission && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4466,7 +4560,7 @@ function ITDashboard() {
                                                 className: "w-3.5 h-3.5 text-primary"
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                                lineNumber: 152,
+                                                lineNumber: 189,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4474,13 +4568,13 @@ function ITDashboard() {
                                                 children: "On"
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                                lineNumber: 153,
+                                                lineNumber: 190,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                        lineNumber: 151,
+                                        lineNumber: 188,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -4493,7 +4587,7 @@ function ITDashboard() {
                                                 className: "w-4 h-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                                lineNumber: 162,
+                                                lineNumber: 199,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4501,35 +4595,35 @@ function ITDashboard() {
                                                 children: "Logout"
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                                lineNumber: 163,
+                                                lineNumber: 200,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                        lineNumber: 156,
+                                        lineNumber: 193,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                lineNumber: 129,
+                                lineNumber: 166,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                        lineNumber: 124,
+                        lineNumber: 161,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                    lineNumber: 123,
+                    lineNumber: 160,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                lineNumber: 122,
+                lineNumber: 159,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
@@ -4539,12 +4633,18 @@ function ITDashboard() {
                         className: "mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 flex-wrap",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "bg-card rounded-lg p-1.5 border border-border inline-flex gap-1 overflow-x-auto flex-wrap shadow-sm",
+                                className: "bg-card rounded-lg p-1.5 border border-border inline-flex gap-1 overflow-x-auto flex-wrap shadow-sm max-w-full",
                                 children: [
                                     {
                                         id: "overview",
                                         label: "Overview",
                                         icon: __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$lucide$2d$react$40$0$2e$454$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$zap$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Zap$3e$__["Zap"]
+                                    },
+                                    {
+                                        id: "overdue",
+                                        label: `Overdue (${statusCounts.overdue})`,
+                                        icon: __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$lucide$2d$react$40$0$2e$454$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$alert$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertCircle$3e$__["AlertCircle"],
+                                        urgent: true
                                     },
                                     {
                                         id: "all",
@@ -4560,29 +4660,36 @@ function ITDashboard() {
                                     },
                                     {
                                         id: "in-progress",
-                                        label: `In Progress (${statusCounts["in-progress"]})`
+                                        label: `Progress (${statusCounts["in-progress"]})`
                                     }
                                 ].map((tab)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                         onClick: ()=>setActiveTab(tab.id),
-                                        className: `px-4 py-2 rounded-md transition-all duration-200 whitespace-nowrap font-medium text-sm flex items-center gap-2 ${activeTab === tab.id ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground hover:bg-muted"}`,
+                                        className: `px-3 py-2 rounded-md transition-all duration-200 whitespace-nowrap font-medium text-sm flex items-center gap-2 ${activeTab === tab.id ? tab.urgent ? "bg-destructive text-destructive-foreground shadow-sm" : "bg-primary text-primary-foreground shadow-sm" : tab.urgent && statusCounts.overdue > 0 ? "text-destructive hover:bg-destructive/10" : "text-muted-foreground hover:text-foreground hover:bg-muted"}`,
                                         children: [
                                             tab.id === "overview" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$lucide$2d$react$40$0$2e$454$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$zap$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Zap$3e$__["Zap"], {
                                                 className: "w-4 h-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                                lineNumber: 189,
+                                                lineNumber: 230,
                                                 columnNumber: 43
+                                            }, this),
+                                            tab.id === "overdue" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$lucide$2d$react$40$0$2e$454$2e$0_react$40$19$2e$2$2e$0$2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$alert$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertCircle$3e$__["AlertCircle"], {
+                                                className: "w-4 h-4"
+                                            }, void 0, false, {
+                                                fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
+                                                lineNumber: 231,
+                                                columnNumber: 42
                                             }, this),
                                             tab.label
                                         ]
                                     }, tab.id, true, {
                                         fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                        lineNumber: 180,
+                                        lineNumber: 218,
                                         columnNumber: 15
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                lineNumber: 172,
+                                lineNumber: 209,
                                 columnNumber: 11
                             }, this),
                             activeTab !== "overview" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -4595,7 +4702,7 @@ function ITDashboard() {
                                         children: "All Categories"
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                        lineNumber: 201,
+                                        lineNumber: 243,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -4603,7 +4710,7 @@ function ITDashboard() {
                                         children: "Software Issues"
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                        lineNumber: 202,
+                                        lineNumber: 244,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -4611,31 +4718,31 @@ function ITDashboard() {
                                         children: "Hardware Issues"
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                        lineNumber: 203,
+                                        lineNumber: 245,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                lineNumber: 196,
+                                lineNumber: 238,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                        lineNumber: 171,
+                        lineNumber: 208,
                         columnNumber: 9
                     }, this),
                     activeTab === "overview" ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "animate-fade-in",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$components$2f$it$2f$dashboard$2d$overview$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                             fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                            lineNumber: 210,
+                            lineNumber: 252,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                        lineNumber: 209,
+                        lineNumber: 251,
                         columnNumber: 11
                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "space-y-4 animate-fade-in",
@@ -4648,7 +4755,7 @@ function ITDashboard() {
                                         className: "w-12 h-12 text-primary"
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                        lineNumber: 217,
+                                        lineNumber: 259,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4656,18 +4763,18 @@ function ITDashboard() {
                                         children: "Loading tickets..."
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                        lineNumber: 218,
+                                        lineNumber: 260,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                lineNumber: 216,
+                                lineNumber: 258,
                                 columnNumber: 17
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                            lineNumber: 215,
+                            lineNumber: 257,
                             columnNumber: 15
                         }, this) : filteredTickets.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "text-center py-16 bg-card rounded-lg border border-border",
@@ -4678,73 +4785,71 @@ function ITDashboard() {
                                         className: "w-6 h-6 text-muted-foreground"
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                        lineNumber: 224,
+                                        lineNumber: 266,
                                         columnNumber: 19
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                    lineNumber: 223,
+                                    lineNumber: 265,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                     className: "text-foreground text-lg font-medium",
-                                    children: "No tickets in this category"
+                                    children: "No tickets found"
                                 }, void 0, false, {
                                     fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                    lineNumber: 226,
+                                    lineNumber: 268,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                     className: "text-muted-foreground text-sm mt-1",
-                                    children: "Check back soon for new support requests"
+                                    children: activeTab === 'overdue' ? "Great job! No tickets are overdue." : "Check back soon for new support requests"
                                 }, void 0, false, {
                                     fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                    lineNumber: 227,
+                                    lineNumber: 269,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                            lineNumber: 222,
+                            lineNumber: 264,
                             columnNumber: 15
                         }, this) : filteredTickets.map((ticket)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$components$2f$it$2f$lazy$2d$ticket$2d$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                 ticket: ticket,
                                 onUpdate: handleTicketUpdate
                             }, ticket.id, false, {
                                 fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                                lineNumber: 231,
+                                lineNumber: 277,
                                 columnNumber: 17
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                        lineNumber: 213,
+                        lineNumber: 255,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                lineNumber: 170,
+                lineNumber: 207,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$10_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$ITTickting__Sys$2f$components$2f$it$2f$add$2d$common$2d$issue$2d$modal$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                 isOpen: showAddIssueModal,
                 onClose: ()=>setShowAddIssueModal(false),
-                onAdd: ()=>{
-                // Refresh if needed
-                }
+                onAdd: ()=>{}
             }, void 0, false, {
                 fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-                lineNumber: 238,
+                lineNumber: 284,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/Downloads/ITTickting Sys/app/it/page.tsx",
-        lineNumber: 121,
+        lineNumber: 158,
         columnNumber: 5
     }, this);
 }
-_s(ITDashboard, "JErzZBKJFcBvYM1RHJoexBgUWnE=");
+_s(ITDashboard, "CNqLlRN/PXF0Zhq4UT2DSgaLaBw=");
 _c = ITDashboard;
 var _c;
 __turbopack_context__.k.register(_c, "ITDashboard");

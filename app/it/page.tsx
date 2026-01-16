@@ -1,8 +1,8 @@
 "use client"
 
-import { useState, useMemo, useEffect } from "react"
+import { useState, useMemo, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
-import { LogOut, Zap, Bell, Plus } from "lucide-react"
+import { LogOut, Zap, Bell, Plus, AlertCircle } from "lucide-react"
 import LazyTicketCard from "@/components/it/lazy-ticket-card"
 import DashboardOverview from "@/components/it/dashboard-overview"
 import { getTickets } from "@/lib/ticket-data"
@@ -11,6 +11,9 @@ import TicketIcon from "@/components/it/ticket-icon"
 import { requestNotificationPermission } from "@/lib/notification"
 import { Spinner } from "@/components/ui/spinner"
 import AddCommonIssueModal from "@/components/it/add-common-issue-modal"
+
+// 15 minutes in milliseconds
+const OVERDUE_THRESHOLD = 15 * 60 * 1000
 
 export default function ITDashboard() {
   const [tickets, setTickets] = useState<Ticket[]>([])
@@ -23,33 +26,63 @@ export default function ITDashboard() {
   const [isMounted, setIsMounted] = useState(false)
   const [showAddIssueModal, setShowAddIssueModal] = useState(false)
 
+  // Track notified tickets to avoid spam
+  const notifiedTicketIds = useRef<Set<string>>(new Set())
+
   useEffect(() => {
     setIsMounted(true)
   }, [])
 
-  // Initial load - show loading spinner
+  // Initial load
   useEffect(() => {
     const loadTickets = () => {
       setTickets(getTickets())
       setIsInitialLoading(false)
     }
-    
-    // Small delay for initial load only
     const timeout = setTimeout(loadTickets, 200)
-    
     return () => clearTimeout(timeout)
   }, [])
 
-  // Background refresh - update silently without showing loading
+  // Background refresh & Notifications
   useEffect(() => {
-    if (isInitialLoading) return // Don't refresh until initial load is done
-    
+    if (isInitialLoading) return
+
+    const checkOverdueAndNotify = (currentTickets: Ticket[]) => {
+      if (!("Notification" in window) || Notification.permission !== "granted") return
+
+      const now = Date.now()
+      const newOverdueTickets = currentTickets.filter(t => {
+        const isOverdue = now - new Date(t.createdAt).getTime() > OVERDUE_THRESHOLD
+        const isActive = t.status !== "resolved" && t.status !== "closed"
+        const notNotified = !notifiedTicketIds.current.has(t.id)
+        return isOverdue && isActive && notNotified
+      })
+
+      if (newOverdueTickets.length > 0) {
+        // Play sound
+        try {
+          const audio = new Audio("data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU") // Short beep placeholder or real file
+          // Simple beep using AudioContext is better but for now let's rely on Notification sound
+          // or just the visual notification
+        } catch (e) { }
+
+        newOverdueTickets.forEach(t => {
+          new Notification("Overdue Ticket Alert", {
+            body: `Ticket ${t.id} has been waiting for more than 15 minutes!`,
+            icon: "/favicon.ico"
+          })
+          notifiedTicketIds.current.add(t.id)
+        })
+      }
+    }
+
     const interval = setInterval(() => {
-      // Silently update tickets in background without showing loading state
-      setTickets(getTickets())
+      const currentTickets = getTickets()
+      setTickets(currentTickets)
       setRefreshKey((prev) => prev + 1)
+      checkOverdueAndNotify(currentTickets)
     }, 5000)
-    
+
     return () => clearInterval(interval)
   }, [isInitialLoading])
 
@@ -67,9 +100,19 @@ export default function ITDashboard() {
     setShowNotificationPrompt(false)
   }
 
+  // Dashboard Check Helper
+  const isOverdue = (ticket: Ticket) => {
+    return (
+      (Date.now() - new Date(ticket.createdAt).getTime() > OVERDUE_THRESHOLD) &&
+      ticket.status !== "resolved" &&
+      ticket.status !== "closed"
+    )
+  }
+
   const filteredTickets = useMemo(() => {
     let allTickets = getTickets()
 
+    // Category Filter
     if (activeTab !== "overview") {
       allTickets = allTickets.filter((t) => {
         if (categoryFilter === "software") return t.issueCategory === "software"
@@ -78,12 +121,16 @@ export default function ITDashboard() {
       })
     }
 
+    // Tab Filter
     if (activeTab === "all") return allTickets
     if (activeTab === "overview") return allTickets
+    if (activeTab === "overdue") return allTickets.filter(isOverdue)
+
     return allTickets.filter((t) => t.status === activeTab)
   }, [activeTab, categoryFilter, refreshKey])
 
   const handleTicketUpdate = () => {
+    setTickets(getTickets())
     setRefreshKey((prev) => prev + 1)
   }
 
@@ -92,19 +139,8 @@ export default function ITDashboard() {
   }
 
   const statusCounts = useMemo(() => {
-    // Only calculate counts after component mounts (client-side only)
-    if (!isMounted) {
-      return {
-        all: 0,
-        open: 0,
-        assigned: 0,
-        "in-progress": 0,
-        "waiting-external": 0,
-        resolved: 0,
-        closed: 0,
-      }
-    }
-    
+    if (!isMounted) return { all: 0, open: 0, assigned: 0, "in-progress": 0, "waiting-external": 0, resolved: 0, closed: 0, overdue: 0 }
+
     const all = getTickets()
     return {
       all: all.length,
@@ -114,6 +150,7 @@ export default function ITDashboard() {
       "waiting-external": all.filter((t) => t.status === "waiting-external").length,
       resolved: all.filter((t) => t.status === "resolved").length,
       closed: all.filter((t) => t.status === "closed").length,
+      overdue: all.filter(isOverdue).length
     }
   }, [refreshKey, isMounted])
 
@@ -134,7 +171,7 @@ export default function ITDashboard() {
                 className="gap-2 hover:bg-primary/10 rounded-lg bg-transparent"
               >
                 <Plus className="w-4 h-4" />
-                <span className="hidden sm:inline">Add Common Issue</span>
+                <span className="hidden sm:inline">Add Issue</span>
               </Button>
               {isMounted && showNotificationPrompt && typeof window !== "undefined" && "Notification" in window && (
                 <Button
@@ -169,24 +206,29 @@ export default function ITDashboard() {
 
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 flex-wrap">
-          <div className="bg-card rounded-lg p-1.5 border border-border inline-flex gap-1 overflow-x-auto flex-wrap shadow-sm">
+          <div className="bg-card rounded-lg p-1.5 border border-border inline-flex gap-1 overflow-x-auto flex-wrap shadow-sm max-w-full">
             {[
               { id: "overview", label: "Overview", icon: Zap },
+              { id: "overdue", label: `Overdue (${statusCounts.overdue})`, icon: AlertCircle, urgent: true },
               { id: "all", label: `All (${statusCounts.all})` },
               { id: "open", label: `Open (${statusCounts.open})` },
               { id: "assigned", label: `Assigned (${statusCounts.assigned})` },
-              { id: "in-progress", label: `In Progress (${statusCounts["in-progress"]})` },
+              { id: "in-progress", label: `Progress (${statusCounts["in-progress"]})` },
             ].map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-2 rounded-md transition-all duration-200 whitespace-nowrap font-medium text-sm flex items-center gap-2 ${
-                  activeTab === tab.id
-                    ? "bg-primary text-primary-foreground shadow-sm"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                }`}
+                className={`px-3 py-2 rounded-md transition-all duration-200 whitespace-nowrap font-medium text-sm flex items-center gap-2 ${activeTab === tab.id
+                    ? tab.urgent
+                      ? "bg-destructive text-destructive-foreground shadow-sm"
+                      : "bg-primary text-primary-foreground shadow-sm"
+                    : tab.urgent && statusCounts.overdue > 0
+                      ? "text-destructive hover:bg-destructive/10"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  }`}
               >
                 {tab.id === "overview" && <Zap className="w-4 h-4" />}
+                {tab.id === "overdue" && <AlertCircle className="w-4 h-4" />}
                 {tab.label}
               </button>
             ))}
@@ -223,8 +265,12 @@ export default function ITDashboard() {
                 <div className="inline-flex items-center justify-center w-14 h-14 bg-muted rounded-full mb-4">
                   <TicketIcon className="w-6 h-6 text-muted-foreground" />
                 </div>
-                <p className="text-foreground text-lg font-medium">No tickets in this category</p>
-                <p className="text-muted-foreground text-sm mt-1">Check back soon for new support requests</p>
+                <p className="text-foreground text-lg font-medium">No tickets found</p>
+                <p className="text-muted-foreground text-sm mt-1">
+                  {activeTab === 'overdue'
+                    ? "Great job! No tickets are overdue."
+                    : "Check back soon for new support requests"}
+                </p>
               </div>
             ) : (
               filteredTickets.map((ticket) => (
@@ -238,9 +284,7 @@ export default function ITDashboard() {
       <AddCommonIssueModal
         isOpen={showAddIssueModal}
         onClose={() => setShowAddIssueModal(false)}
-        onAdd={() => {
-          // Refresh if needed
-        }}
+        onAdd={() => { }}
       />
     </div>
   )
